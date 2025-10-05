@@ -2,17 +2,17 @@ package projects.bank;
 //Imports
 import java.util.Scanner;
 //Class
-public class account {
+public class Account {
     //Declarations
-    public String AccountID, AccountName;
-    public double AccountBal;
-    enum AccountTypeEnum{
+    public String AccountID, AccountName;  // TODO camelCase, visibility
+    public double AccountBal;  // TODO camelCase, visibility
+    enum AccountTypeEnum{  // TODO put it its own file
         CHECKING,
         SAVINGS
     };
-    AccountTypeEnum AccountType;
+    AccountTypeEnum AccountType;  // TODO camelCase
 
-    public account(String acID, String acName, double acBal, AccountTypeEnum acType){
+    public Account(String acID, String acName, double acBal, AccountTypeEnum acType){
         //Declarations/Assignments
         AccountID = acID;
         AccountName = acName;
