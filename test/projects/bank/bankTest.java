@@ -8,7 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 
-public class bankTest {
+public class BankTest {
     account 
     public static void main(String[] args) {
         BankAccounts[0] = Account00;
