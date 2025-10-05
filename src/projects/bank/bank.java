@@ -2,11 +2,11 @@ package projects.bank;
 
 import java.util.ArrayList;
 
-public class bank {
+public class Bank {
     //Declarations
-    account newAccount;
-    public account[] BankAccounts = new account[10];
-    public bank(){
+    Account newAccount;
+    public Account[] BankAccounts = new Account[10];
+    public Bank(){
 
     }
     public void addAccount(){
@@ -16,14 +16,16 @@ public class bank {
     public int countAccounts(){
         return BankAccounts.size();
     }
-    public account accountsByID(String accountID){
+    // TODO double-check problem spec. Should return an index.
+    public Account accountsByID(String accountID){
         for (int i = 0; (BankAccounts[i]).AccountID != accountID; i++){
             if((BankAccounts[i]).AccountID == accountID){
                 return BankAccounts[i];
             }
         }
     }
-    public account accountsByName(){
+    // not part of spec, can be removed
+    public Account accountsByName(){
         
     }
 }
