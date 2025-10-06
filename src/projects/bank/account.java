@@ -1,35 +1,31 @@
 package projects.bank;
 //Imports
-import java.util.Scanner;
+//import java.util.Scanner;
 //Class
 public class Account {
     //Declarations
-    public String AccountID, AccountName;  // TODO camelCase, visibility
-    public double AccountBal;  // TODO camelCase, visibility
-    enum AccountTypeEnum{  // TODO put it its own file
-        CHECKING,
-        SAVINGS
-    };
-    AccountTypeEnum AccountType;  // TODO camelCase
+    private String accountID, accountName;
+    private double accountBal;
+    private AccountTypeEnum accountType;
 
     public Account(String acID, String acName, double acBal, AccountTypeEnum acType){
         //Declarations/Assignments
-        AccountID = acID;
-        AccountName = acName;
-        AccountBal = acBal;
-        AccountType = acType;
+        accountID = acID;
+        accountName = acName;
+        accountBal = acBal;
+        accountType = acType;
     }
     //Accessors
     public double getBal(){
-        return AccountBal;
+        return accountBal;
         }
     public String getName(){
-        return AccountName;
+        return accountName;
     }
     public String getID(){
-        return AccountID;
+        return accountID;
     }
     public AccountTypeEnum getType(){
-        return AccountType;
+        return accountType;
     }
 }
