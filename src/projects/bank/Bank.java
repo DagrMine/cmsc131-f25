@@ -10,8 +10,11 @@ public class Bank {
 
 //Modify Functions
 
-    //Adds an account to the bank at the next empty index in the array and returns true if it succeeds.
-    //@param newAccount
+    /**
+     * Adds an account to the bank at the next empty index in the array and returns true if it succeeds.
+     * @param newAccount
+     * @return
+     */
     public boolean addAccount(Account newAccount){
         for(int i= 0; i < bankAccounts.length; i++){
             if (bankAccounts[i] == null){
@@ -53,6 +56,7 @@ public class Bank {
     }
     //Input an account ID to return an account number/account index
     public int getAccountIndexById(String accountID) {
+        // TODO need only loop up to numberOfAccounts
         for (int i = 0; i < bankAccounts.length; i++) {
             if (bankAccounts[i].getID() == accountID) {
                 return i;
