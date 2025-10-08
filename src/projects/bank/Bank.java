@@ -57,9 +57,15 @@ public class Bank {
     //Input an account ID to return an account number/account index
     public int getAccountIndexById(String accountID) {
         // TODO need only loop up to numberOfAccounts
+        // TODO BUG: throws NullPointerException when numberOfAccounts == 0
         for (int i = 0; i < bankAccounts.length; i++) {
-            if (bankAccounts[i].getID() == accountID) {
+            try {
+                if (bankAccounts[i].getID() == accountID) {
                 return i;
+            }
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+                System.out.println("TODO resolve bug");
             }
         } return -1;
     }
