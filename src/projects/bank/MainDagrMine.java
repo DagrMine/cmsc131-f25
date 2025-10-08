@@ -1,6 +1,6 @@
 package projects.bank;
 
-public class Main {
+public class MainDagrMine {
     public static void main(String[] args) {
          //Account Test Personal
          Account Account00 = new Account (
