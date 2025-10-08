@@ -6,14 +6,20 @@ import static org.junit.jupiter.api.Assertions.*;
 
 //Test
 public class BankTest {
-    @Test
+
+    @Test // unnecessary test
     public void testConstructor() {
         //Testing bank initialization
         Bank bank = new Bank();
         assertTrue(bank != null);
     }
+
+    // TODO test data validation in `add` method
+    // TODO test add success returns true
+    // TODO test add fail returns false
+    
     @Test
-    public void testMisc(){
+    public void testMisc(){ // TODO more descriptive name
         Bank bank = new Bank();
         Account account = new Account("Heavy","Mikhail", 400000.12, AccountTypeEnum.CHECKING);
         Account account2 = new Account("J222222","Steve Lobs", 8.3*(Math.pow(10,9)), AccountTypeEnum.SAVINGS);
@@ -23,6 +29,7 @@ public class BankTest {
         assertEquals(account,bank.getAccountByIndex(0));
         assertEquals(account2,bank.getAccountByIndex(1));
     }
+
     @Test
     public void testSearch(){
         //Load in test data
@@ -42,4 +49,6 @@ public class BankTest {
         //Return an account index using its ID
         assertEquals(0,bank.getAccountIndexById("E111111"));
     }
+
+    // TODO test find fail returns correct value
 }
