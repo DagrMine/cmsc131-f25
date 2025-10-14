@@ -1,17 +1,25 @@
 package projects.bank;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.util.Scanner;
+
 public class Bank {
     private Account[] bankAccounts;
     private int numberOfAccounts = 0;
     
     public Bank() {
-        bankAccounts = new Account[100];
+        bankAccounts = new Account[1000];
     }
 
 //Modify Functions
 
-    //Adds an account to the bank at the next empty index in the array and returns true if it succeeds.
-    //@param newAccount
+//TODO copy account array into a new and bigger account array when the first array is full.
+    /** Adds an account to the bank at the next empty index in the array and returns true if it succeeds.
+     * Returns false if unable to add more accounts.
+     * @param newAccount
+    */
     public boolean addAccount(Account newAccount){
         for(int i= 0; i < bankAccounts.length; i++){
             if (bankAccounts[i] == null){
@@ -20,7 +28,7 @@ public class Bank {
                 return true;
             }
         }
-        //TODO automatically create a new array with a much larger size if the bankAccounts array is full.
+        System.arraycopy(newAccount, numberOfAccounts, newAccount, numberOfAccounts, numberOfAccounts);
         System.out.println("There are no available account slots.");
         return false;
     }
@@ -36,7 +44,9 @@ public class Bank {
 
 //Search Functions
 
-    //Input an account ID to return a bank account.
+    /** Input an account ID to return a bank account.
+     * @param
+    */
     public Account getAccountByID(String accountID) {
         for (int i = 0; i < bankAccounts.length; i++) {
             if (bankAccounts[i].getID() == accountID) {
@@ -51,7 +61,10 @@ public class Bank {
         }
 */
     }
-    //Input an account ID to return an account number/account index
+    /**
+     * Input an account ID to return an account number/account index
+    * @param accountID
+    */
     public int getAccountIndexById(String accountID) {
         for (int i = 0; i < bankAccounts.length; i++) {
             if (bankAccounts[i].getID() == accountID) {
@@ -59,18 +72,43 @@ public class Bank {
             }
         } return -1;
     }
-    //Returns an account for the given array index number
+    /** 
+     * Returns an account for the given array index number
+     * @param accountIndex
+    */
     public Account getAccountByIndex(int accountIndex){
         return bankAccounts[accountIndex];
     }
 
     // added as the course notes recommend adding this method though it is not required
-    //TODO modify for one owner of multiple accounts
-    public Account getAccountsByName(String accountName) {
-        for (int i = 0; i < bankAccounts.length; i++) {
+    //TODO maybe return an array of accounts instead of a string of indexes separated by commas
+    public String getAccountsByName(String accountName) {
+        String accountNameIndexes = "";
+        for (int i = 0; i < numberOfAccounts; i++) {
             if (bankAccounts[i].getName() == accountName) {
-                return bankAccounts[i];
+                accountNameIndexes = accountNameIndexes+i+",";
             }
-        } return null;
+        }
+        if (accountNameIndexes == "") {
+            return null;            
+        } else return accountNameIndexes;
+    }
+    public void loadAccounts(String fileName){
+        File inputFile = new File(fileName);
+        try(Scanner scanFile = new Scanner(inputFile)){
+            while (scanFile.hasNextLine()){
+                int i=0;
+                String thisLine = scanFile.nextLine();
+                bankAccounts[i] = Account.parseAccounts(thisLine);
+                i++;
+            }
+        } catch(FileNotFoundException E) {
+            E.printStackTrace();
+        }
+    }
+    public void writeAccounts(String fileName){
+        try(FileWriter writer = new FileWriter(fileName)){
+
+        }
     }
 }
