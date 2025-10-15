@@ -16,4 +16,11 @@ public class AccountTest {
         assertEquals(9245.1489, account.getBal());
         assertEquals(AccountTypeEnum.CHECKING, account.getType());
     }
+    @Test
+    public void testParsing(){
+        Account account = new Account("EJ521953", "Jim Yim Whim", 125923.55, AccountTypeEnum.CHECKING);
+        assertEquals("checking,EJ521953,Jim Yim Whim,125923.55", account.accountToCSV(account));
+        assertEquals(account.getID(), Account.CSVToAccount("checking,EJ521953,Jim Yim Whim,125923.55").getID());
+        assertEquals(account.getType(), Account.CSVToAccount("checking,EJ521953,Jim Yim Whim,125923.55").getType());
+    }
 }

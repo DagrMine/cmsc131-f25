@@ -3,6 +3,7 @@ package projects.bank;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Bank {
@@ -94,21 +95,40 @@ public class Bank {
         } else return accountNameIndexes;
     }
     public void loadAccounts(String fileName){
+        //Declarations
         File inputFile = new File(fileName);
+        String thisLine;
+        Account accountLine;
+        int i=0;
+        //Function
         try(Scanner scanFile = new Scanner(inputFile)){
             while (scanFile.hasNextLine()){
-                int i=0;
-                String thisLine = scanFile.nextLine();
-                bankAccounts[i] = Account.parseAccounts(thisLine);
+                thisLine = scanFile.nextLine();
+                accountLine = Account.CSVToAccount(thisLine);
+                bankAccounts[i] = accountLine;
+                //Testing to see why its breaking
+                System.out.println(bankAccounts[i]);
+                System.out.println(i);
+                //increases account counter for use in the countAccounts function
+                numberOfAccounts++;
+                //Move to the next array position
                 i++;
             }
-        } catch(FileNotFoundException E) {
+        } //Error Catching
+        catch(FileNotFoundException E) {
             E.printStackTrace();
         }
     }
     public void writeAccounts(String fileName){
         try(FileWriter writer = new FileWriter(fileName)){
-
+            for(int i = 0; i < bankAccounts.length; i++){
+                if (bankAccounts[i] != null){
+                    String unParsed = bankAccounts[i].accountToCSV(bankAccounts[i]);
+                    writer.write(unParsed+"\n");
+                }
+            }
+        } catch(IOException E) {
+            E.printStackTrace();
         }
     }
 }

@@ -8,6 +8,8 @@ public class Account {
     private double accountBal;
     private AccountTypeEnum accountType;
 
+//TODO Data validation to ensure that balance does not have more than two decimal places
+//TODO General data validation for the account class
     /**
      * Stores account information
      * @param acID stores account id information as a String
@@ -38,7 +40,7 @@ public class Account {
     /** Translates an account in the form of a comma separated string to an account object
      * @param accountLine input a comma separated string that contains the (in this order) typing, ID, name, and balance.
      */
-    public static Account parseAccounts(String accountLine){
+    public static Account CSVToAccount(String accountLine){
         String[] tokens = accountLine.split(",");
         String tokenID = tokens[1];
         String tokenName = tokens[2];
@@ -47,11 +49,12 @@ public class Account {
         Account returnedAccount = new Account (tokenID,tokenName,tokenBal,tokenType);
         return returnedAccount;
     }
-    public static String unParseAccounts(Account accountLine){
-        //String type = accountLine.getType()+"";
+    public String accountToCSV(Account accountLine){
+        String type = accountLine.getType()+"";
         //String ID = accountLine.getID();
-        //Incredibly 'interesting' way of changing an account into a string.
-        String token = accountLine.getType()+","+accountLine.getID()+","+accountLine.getName()+","+accountLine.getBal();
+        //Incredibly 'interesting' way of changing an account into a string. I'm commiting to it.
+        //It combines the type, converted to a string, to lowercase, then combines it with the rest of the account data as one string separated by commas.
+        String token = type.toLowerCase()+","+accountLine.getID()+","+accountLine.getName()+","+accountLine.getBal();
         return token;
     }
 }

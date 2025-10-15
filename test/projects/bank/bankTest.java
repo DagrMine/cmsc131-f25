@@ -4,6 +4,10 @@ package projects.bank;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 //Test
 public class BankTest {
     @Test
@@ -47,4 +51,43 @@ public class BankTest {
         //Return an account index using its ID
         assertEquals(0,bank.getAccountIndexById("E111111"));
     }
+    @Test  
+    public void testWriteAccounts() {
+        Bank bank = new Bank();
+        Account account1 = new Account("E111111","Bim Jeam", 12405.345, AccountTypeEnum.SAVINGS);
+        Account account2 = new Account("G124052","Zelda", 4125.3, AccountTypeEnum.CHECKING);
+        Account account3 = new Account("A85294","Zelda", 9528.49, AccountTypeEnum.SAVINGS);
+        Account account4 = new Account("J516208","Zelda", 4125.3, AccountTypeEnum.CHECKING);
+        bank.addAccount(account1);
+        bank.addAccount(account2);
+        bank.addAccount(account3);
+        bank.addAccount(account4);
+
+        //write accounts
+        bank.writeAccounts("accountsTest.csv");
+        
+        //test if the accounts are written
+        File testFile = new File("accountsTest.csv");
+        Scanner testScanner;
+        try {
+            testScanner = new Scanner(testFile);
+            assertEquals("savings,E111111,Bim Jeam,12405.345",testScanner.nextLine());
+            assertEquals("checking,G124052,Zelda,4125.3",testScanner.nextLine());
+            assertEquals("savings,A85294,Zelda,9528.49",testScanner.nextLine());
+            assertEquals("checking,J516208,Zelda,4125.3",testScanner.nextLine());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+    @Test
+    public void testLoadAccounts() {
+        //load accounts
+        //ENSURE THIS STEP IS DONE WITH A WORKING ACCOUNTSTEST.CSV FILE ALREADY MADE
+        Bank bank = new Bank();
+        bank.loadAccounts("accountsTest.csv");
+        Account account2 = new Account("G124052","Zelda", 4125.3, AccountTypeEnum.CHECKING);
+        //verify accounts are loaded
+        assertEquals(account2,bank.getAccountByID("G124052"));
+        assertEquals(4, bank.countAccounts());
+    } 
 }
