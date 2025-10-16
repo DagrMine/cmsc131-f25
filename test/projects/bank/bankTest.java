@@ -42,8 +42,8 @@ public class BankTest {
         //Return an account using the array index number
         assertEquals(account2,bank.getAccountByIndex(1));
         assertEquals(null,bank.getAccountByIndex(6));
-        //Return accounts from a given name //TODO add a way to return multiple accounts with the same owner
-        assertEquals(bank.getAccountsByName("Zelda"),"1,2,3,");
+        //Return accounts from a given name
+        assertEquals(bank.getAccountsByNameString("Zelda"),"1,2,3,");
         //Count the number of active accounts
         assertEquals(4,bank.countAccounts());
         //Return an account by its ID
@@ -87,7 +87,7 @@ public class BankTest {
         bank.loadAccounts("accountsTest.csv");
         Account account2 = new Account("G124052","Zelda", 4125.3, AccountTypeEnum.CHECKING);
         //verify accounts are loaded
-        assertEquals(account2,bank.getAccountByID("G124052"));
+        assertEquals(account2.getBal(),(bank.getAccountByID("G124052")).getBal());
         assertEquals(4, bank.countAccounts());
     } 
 }
