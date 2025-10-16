@@ -17,7 +17,7 @@ public class BankTest {
         assertTrue(bank != null);
     }
     @Test
-    public void testMisc(){
+    public void testAddAccounts(){
         Bank bank = new Bank();
         Account account = new Account("Heavy","Mikhail", 400000.12, AccountTypeEnum.CHECKING);
         Account account2 = new Account("J222222","Steve Lobs", 8.3*(Math.pow(10,9)), AccountTypeEnum.SAVINGS);
@@ -27,6 +27,7 @@ public class BankTest {
         assertEquals(account,bank.getAccountByIndex(0));
         assertEquals(account2,bank.getAccountByIndex(1));
     }
+    //TODO Add tests for removing accounts.
     @Test
     public void testSearch(){
         //Load in test data
@@ -44,6 +45,7 @@ public class BankTest {
         assertEquals(null,bank.getAccountByIndex(6));
         //Return accounts from a given name
         assertEquals(bank.getAccountsByNameString("Zelda"),"1,2,3,");
+        assertEquals(bank.getAccountsByNameArray("Zelda")[2].getID(),"J516208");
         //Count the number of active accounts
         assertEquals(4,bank.countAccounts());
         //Return an account by its ID

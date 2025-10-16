@@ -12,7 +12,7 @@ public class Account {
 //TODO General data validation for the account class
     /**
      * Stores account information
-     * @param acID stores account id information as a String
+     * @param acID stores account ID information as a String
      * @param acName stores account name information as a String
      * @param acBal stores account balance information as a Double
      * @param acType stores account typing (CHECKING or SAVINGS) as an Enum
@@ -25,15 +25,19 @@ public class Account {
         accountType = acType;
     }
     //Accessors
+    /** Returns the balance of the account object. (Double)*/
     public double getBal(){
         return accountBal;
         }
+    /**Returns the name of the account object. (String)*/
     public String getName(){
         return accountName;
     }
+    /**Returns the ID of the account object. (String)*/
     public String getID(){
         return accountID;
     }
+    /**Returns the Enum Type of the account object. (AccountTypeEnum)*/
     public AccountTypeEnum getType(){
         return accountType;
     }
@@ -49,6 +53,9 @@ public class Account {
         Account returnedAccount = new Account (tokenID,tokenName,tokenBal,tokenType);
         return returnedAccount;
     }
+    /** Translates an account object into a comma separated string.
+     * @param accountLine the account object to be turned into a comma separated string.
+     */
     public String accountToCSV(Account accountLine){
         String type = accountLine.getType()+"";
         //String ID = accountLine.getID();
