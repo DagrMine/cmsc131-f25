@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 //Test
 public class AccountTest {
 
+    // TODO add data validation test for constructor
 
     @Test
     public void testConstructor() {

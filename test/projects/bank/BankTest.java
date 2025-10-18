@@ -10,12 +10,18 @@ import java.util.Scanner;
 
 //Test
 public class BankTest {
-    @Test
+
+    @Test // unnecessary test
     public void testConstructor() {
         //Testing bank initialization
         Bank bank = new Bank();
         assertTrue(bank != null);
     }
+
+    // TODO test data validation in `add` method
+    // TODO test add success returns true
+    // TODO test add fail returns false
+    
     @Test
     public void testAddAccounts(){
         Bank bank = new Bank();
@@ -92,4 +98,6 @@ public class BankTest {
         assertEquals(account2.getBal(),(bank.getAccountByID("G124052")).getBal());
         assertEquals(4, bank.countAccounts());
     } 
+
+    // TODO test find fail returns correct value
 }

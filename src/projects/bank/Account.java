@@ -18,6 +18,7 @@ public class Account {
      * @param acType stores account typing (CHECKING or SAVINGS) as an Enum
      */
     public Account(String acID, String acName, double acBal, AccountTypeEnum acType){
+        // TODO add data validation for String and AccountTypeEnum arguments
         //Declarations/Assignments
         accountID = acID;
         accountName = acName;
