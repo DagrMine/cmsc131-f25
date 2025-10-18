@@ -142,41 +142,48 @@ public class Bank {
     /**Loads accounts into a bank array object from a CSV file.
      * @param fileName Name of the CSV file as a String.
      */
+    // TODO return boolean
     public void loadAccounts(String fileName){
         //Declarations
         File inputFile = new File(fileName);
-        String thisLine;
-        Account accountLine;
-        int i=0;
+        String thisLine; // TODO unecessary
+        Account accountLine; // TODO unneecssary
+        int i=0; // TODO unnecessary (see line 156)
         //Function
         try(Scanner scanFile = new Scanner(inputFile)){
             while (scanFile.hasNextLine()){
                 thisLine = scanFile.nextLine();
                 accountLine = Account.CSVToAccount(thisLine);
+                // TODO use this bank's addAccount method instead of this
                 bankAccounts[i] = accountLine;
                 //increases account counter for use in the countAccounts function
                 numberOfAccounts++;
                 //Move to the next array position
                 i++;
+                // end TODO
             }
         } //Error Catching
-        catch(FileNotFoundException E) {
-            E.printStackTrace();
+        catch(FileNotFoundException e) {
+            e.printStackTrace();
         }
     }
+    
     /** Writes accounts from a bank array object to a CSV file
      * @param fileName Name of the CSV file as a String.
     */
+    // TODO return boolean
     public void writeAccounts(String fileName){
         try(FileWriter writer = new FileWriter(fileName)){
             for(int i = 0; i < bankAccounts.length; i++){
                 if (bankAccounts[i] != null){
                     String unParsed = bankAccounts[i].accountToCSV(bankAccounts[i]);
                     writer.write(unParsed+"\n");
+                    // "\n" is ok because your dev container runs linux
+                    // but consider using the os-agnostic System.lineSeparator()
                 }
             }
-        } catch(IOException E) {
-            E.printStackTrace();
+        } catch(IOException e) {
+            e.printStackTrace();
         }
     }
 }
