@@ -8,6 +8,9 @@ import static org.junit.jupiter.api.Assertions.*;
 public class AccountTest {
 
     // TODO add data validation test for constructor
+    // TODO static factory throws on null input
+    // TODO static factory preserves data
+    // TODO toCSV output is correct
 
     @Test
     public void testConstructor() {
