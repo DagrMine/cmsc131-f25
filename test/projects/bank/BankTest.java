@@ -33,7 +33,9 @@ public class BankTest {
         assertEquals(account,bank.getAccountByIndex(0));
         assertEquals(account2,bank.getAccountByIndex(1));
     }
+
     //TODO Add tests for removing accounts.
+
     @Test
     public void testSearch(){
         //Load in test data
@@ -59,6 +61,7 @@ public class BankTest {
         //Return an account index using its ID
         assertEquals(0,bank.getAccountIndexById("E111111"));
     }
+
     @Test  
     public void testWriteAccounts() {
         Bank bank = new Bank();
@@ -87,6 +90,10 @@ public class BankTest {
             e.printStackTrace();
         }
     }
+
+    // TODO test writeAccounts failure mode
+    // TODO test writeAccounts returns true on succeed
+
     @Test
     public void testLoadAccounts() {
         //load accounts
@@ -99,5 +106,8 @@ public class BankTest {
         assertEquals(4, bank.countAccounts());
     } 
 
-    // TODO test find fail returns correct value
+    // TODO test find method failure returns correct value
+    // TODO test loadAccounts failure mode returns correct value
+    // TODO test loadAccounts returns true on succeed
+
 }
