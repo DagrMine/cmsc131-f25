@@ -83,17 +83,12 @@ public class Bank {
     * @param accountID
     */
     public int getAccountIndexById(String accountID) {
-        // TODO need only loop up to numberOfAccounts
-        // TODO BUG: throws NullPointerException when numberOfAccounts == 0
-        for (int i = 0; i < bankAccounts.length; i++) {
-            try {
-                if (bankAccounts[i].getID() == accountID) {
+        if (numberOfAccounts != 0){
+        for (int i = 0; i < numberOfAccounts; i++) {
+            if (bankAccounts[i].getID() == accountID) {
                 return i;
             }
-            } catch (NullPointerException e) {
-                e.printStackTrace();
-                System.out.println("TODO resolve bug");
-            }
+        }
         } return -1;
     }
     /** 
@@ -142,48 +137,46 @@ public class Bank {
     /**Loads accounts into a bank array object from a CSV file.
      * @param fileName Name of the CSV file as a String.
      */
-    // TODO return boolean
-    public void loadAccounts(String fileName){
+    public boolean loadAccounts(String fileName){
         //Declarations
         File inputFile = new File(fileName);
-        String thisLine; // TODO unecessary
-        Account accountLine; // TODO unneecssary
-        int i=0; // TODO unnecessary (see line 156)
+        int i=0;
         //Function
         try(Scanner scanFile = new Scanner(inputFile)){
             while (scanFile.hasNextLine()){
-                thisLine = scanFile.nextLine();
-                accountLine = Account.CSVToAccount(thisLine);
-                // TODO use this bank's addAccount method instead of this
-                bankAccounts[i] = accountLine;
+                // The addAccount method is designed for adding one account to an already loaded bank and would be much more inefficient than doing this
+                bankAccounts[i] = Account.CSVToAccount(scanFile.nextLine());
                 //increases account counter for use in the countAccounts function
                 numberOfAccounts++;
                 //Move to the next array position
                 i++;
-                // end TODO
+                // TODO end
             }
+            return true;
         } //Error Catching
         catch(FileNotFoundException e) {
             e.printStackTrace();
         }
+        return false;
     }
     
     /** Writes accounts from a bank array object to a CSV file
      * @param fileName Name of the CSV file as a String.
     */
-    // TODO return boolean
-    public void writeAccounts(String fileName){
+    public boolean writeAccounts(String fileName){
         try(FileWriter writer = new FileWriter(fileName)){
             for(int i = 0; i < bankAccounts.length; i++){
                 if (bankAccounts[i] != null){
-                    String unParsed = bankAccounts[i].accountToCSV(bankAccounts[i]);
-                    writer.write(unParsed+"\n");
+                    String bankLine = bankAccounts[i].accountToCSV(bankAccounts[i]);
+                    writer.write(bankLine+System.lineSeparator());
                     // "\n" is ok because your dev container runs linux
                     // but consider using the os-agnostic System.lineSeparator()
                 }
+                return true;
             }
         } catch(IOException e) {
             e.printStackTrace();
         }
+        return false;
     }
 }

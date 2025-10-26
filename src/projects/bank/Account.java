@@ -58,7 +58,7 @@ public class Account {
      * @param accountLine the account object to be turned into a comma separated string.
      */
     public String accountToCSV(Account accountLine){
-        String type = accountLine.getType()+""; // what's the intent here?
+        String type = accountLine.getType().name(); // what's the intent here?
                                                 // to cast to a String, use accountLine.getType().name()
         //String ID = accountLine.getID();
         //Incredibly 'interesting' way of changing an account into a string. I'm commiting to it.
