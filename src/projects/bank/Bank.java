@@ -9,24 +9,28 @@ import java.util.Scanner;
 public class Bank {
     private Account[] bankAccounts;
     private int numberOfAccounts = 0;
-    
+
     public Bank() {
         bankAccounts = new Account[1000];
     }
 
-                        //Add and remove accounts functions
-//TODO copy account array into a new and bigger account array when the first array is full.
-    /** Adds an account to the bank at the next empty index in the array and returns true if it succeeds.
+    // Add and remove accounts functions
+    // TODO copy account array into a new and bigger account array when the first
+    // array is full.
+    /**
+     * Adds an account to the bank at the next empty index in the array and returns
+     * true if it succeeds.
      * Returns false if unable to add more accounts.
+     * 
      * @param newAccount
-    */
-    public boolean addAccount(Account newAccount){
-        //Null validation
-        if(newAccount == null){
+     */
+    public boolean addAccount(Account newAccount) {
+        // Null validation
+        if (newAccount == null) {
             return false;
         }
-        for(int i= 0; i < bankAccounts.length; i++){
-            if (bankAccounts[i] == null){
+        for (int i = 0; i < bankAccounts.length; i++) {
+            if (bankAccounts[i] == null) {
                 bankAccounts[i] = newAccount;
                 numberOfAccounts++;
                 return true;
@@ -36,176 +40,227 @@ public class Bank {
         System.out.println("There are no available account slots. Please change internally later.");
         return false;
     }
-    //Still not necessary buuuuuuuuut I feel it would be incomplete without it. 
-    //Also I made a way for the add account to adapt for this already and would be sad if I didnt get the chance to see if it works.
-    /** Removes an account from the bank array using a given array index value.
-     * @param index an index value belonging to a bank object that defines an account.
+
+    // Still not necessary buuuuuuuuut I feel it would be incomplete without it.
+    // Also I made a way for the add account to adapt for this already and would be
+    // sad if I didnt get the chance to see if it works.
+    /**
+     * Removes an account from the bank array using a given array index value.
+     * 
+     * @param index an index value belonging to a bank object that defines an
+     *              account.
      */
-    public void removeAccountByIndex(int index){
+    public void removeAccountByIndex(int index) {
         bankAccounts[index] = null;
         numberOfAccounts--;
     }
-    /** Removes all accounts from the bank object with a given name.
+
+    /**
+     * Removes all accounts from the bank object with a given name.
+     * 
      * @param accountName Name of the accounts to be removed as a string.
      */
-    public void removeAccountsByName(String accountName){
+    public void removeAccountsByName(String accountName) {
         int numberOfAccountsStatic = numberOfAccounts;
         for (int i = 0; i < numberOfAccountsStatic; i++) {
             if (bankAccounts[i].getName().equals(accountName)) {
-            bankAccounts[i] = null;
-            numberOfAccounts--;
+                bankAccounts[i] = null;
+                numberOfAccounts--;
+            }
         }
     }
-    }
-    /**Count the number of accounts
+
+    /**
+     * Count the number of accounts
      * 
-    */
+     */
     public int countAccounts() {
         return numberOfAccounts;
     }
 
-//Search Functions
+    // Search Functions
 
-    /** Input an account ID to return a bank account.
+    /**
+     * Input an account ID to return a bank account.
+     * 
      * @param accountID the account ID as a string. Returns null if none is found.
-    */
+     */
     public Account getAccountByID(String accountID) {
         for (int i = 0; i < bankAccounts.length; i++) {
             if (bankAccounts[i].getID().equals(accountID)) {
                 return bankAccounts[i];
             }
-        } return null;
-/*
-        for (int i = 0; (BankAccounts[i]).AccountID != accountID; i++){
-        if((BankAccounts[i]).AccountID == accountID){
-        return BankAccounts[i];
         }
-        }
-*/
+        return null;
+        /*
+         * for (int i = 0; (BankAccounts[i]).AccountID != accountID; i++){
+         * if((BankAccounts[i]).AccountID == accountID){
+         * return BankAccounts[i];
+         * }
+         * }
+         */
     }
+
     /**
      * Input an account ID to return an account number/account index
-    * @param accountID
-    */
+     * 
+     * @param accountID
+     */
     public int getAccountIndexById(String accountID) {
-        if (numberOfAccounts != 0){
-        for (int i = 0; i < numberOfAccounts; i++) {
-            if (bankAccounts[i].getID() == accountID) {
-                return i;
+        if (numberOfAccounts != 0) {
+            for (int i = 0; i < numberOfAccounts; i++) {
+                if (bankAccounts[i].getID() == accountID) {
+                    return i;
+                }
             }
         }
-        } return -1;
+        return -1;
     }
-    /** 
+
+    /**
      * Returns an account for the given array index number
+     * 
      * @param accountIndex
-    */
-    public Account getAccountByIndex(int accountIndex){
+     */
+    public Account getAccountByIndex(int accountIndex) {
         return bankAccounts[accountIndex];
     }
 
-    // added as the course notes recommend adding this method though it is not required. It's also fun and might be useful later.
-    /**Gets the array index values for a given name and returns them as a string separated by commas (,). If no accounts are found, it returns null.
+    // added as the course notes recommend adding this method though it is not
+    // required. It's also fun and might be useful later.
+    /**
+     * Gets the array index values for a given name and returns them as a string
+     * separated by commas (,). If no accounts are found, it returns null.
+     * 
      * @param accountName Name of the accounts to search for.
      */
     public String getAccountsByNameString(String accountName) {
         String accountNameIndexes = "";
         for (int i = 0; i < numberOfAccounts; i++) {
             if (bankAccounts[i].getName().equals(accountName)) {
-                accountNameIndexes = accountNameIndexes+i+",";
+                accountNameIndexes = accountNameIndexes + i + ",";
             }
         }
         if (accountNameIndexes == "") {
-            return null;            
-        } else return accountNameIndexes;
+            return null;
+        } else
+            return accountNameIndexes;
     }
-    /**Gets the accounts under a given name and returns them as an array beginning at index 0. If no accounts are found, it returns null.
+
+    /**
+     * Gets the accounts under a given name and returns them as an array beginning
+     * at index 0. If no accounts are found, it returns null.
+     * 
      * @param accountName Name of the accounts to search for.
      */
-    public Account[] getAccountsByNameArray(String accountName){
-        //Declarations
+    public Account[] getAccountsByNameArray(String accountName) {
+        // Declarations
         Account[] accounts = new Account[numberOfAccounts];
-        //Counter for the returned array
+        // Counter for the returned array
         int a = 0;
-        //Function
+        // Function
         for (int i = 0; i < numberOfAccounts; i++) {
             if (bankAccounts[i].getName().equals(accountName)) {
                 accounts[a] = bankAccounts[i];
                 a++;
             }
         }
-        //Null validation
+        // Null validation
         if (accounts[0].equals(null)) {
             return null;
-        } else return accounts;
+        } else
+            return accounts;
     }
 
-//Bank to CSV methods
-    
-    /**Loads accounts into a bank array object from a CSV file.
+    // Bank to CSV methods
+
+    /**
+     * Loads accounts into a bank array object from a CSV file.
+     * 
      * @param fileName Name of the CSV file as a String.
      */
-    public boolean loadAccounts(String fileName){
-        //Null validation
-        if(fileName == null){
+    public boolean loadAccounts(String fileName) {
+        // Null validation
+        if (fileName == null) {
             return false;
         }
 
-        //Declarations
+        // Declarations
         File inputFile = new File(fileName);
-        int i=0;
+        int i = 0;
 
-        //Function
-        try(Scanner scanFile = new Scanner(inputFile)){
-            while (scanFile.hasNextLine()){
-                // The addAccount method is designed for adding one account to an already loaded bank and would be much more inefficient than doing this
+        // Function
+        try (Scanner scanFile = new Scanner(inputFile)) {
+            while (scanFile.hasNextLine()) {
+                // The addAccount method is designed for adding one account to an already loaded
+                // bank and would be much more inefficient than doing this
                 bankAccounts[i] = Account.CSVToAccount(scanFile.nextLine());
-                //increases account counter for use in the countAccounts function
+                // increases account counter for use in the countAccounts function
                 numberOfAccounts++;
-                //Move to the next array position
+                // Move to the next array position
                 i++;
                 // TODO end
-                // TODO what do you mean by this (is it necessary). I may get the chance to ask after class though.
+                // TODO what do you mean by this (is it necessary). I may get the chance to ask
+                // after class though.
             }
             return true;
 
-        } //Error Catching
-        catch(FileNotFoundException e) {
+        } // Error Catching
+        catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         return false;
     }
-    
-    /** Writes accounts from a bank array object to a CSV file
-     * @param fileName Name of the CSV file as a String.
-    */
-    public boolean writeAccounts(String fileName){
 
-        //Null validation
-        if(fileName == null){
+    /**
+     * Writes accounts from a bank array object to a CSV file
+     * 
+     * @param fileName Name of the CSV file as a String.
+     */
+    public boolean writeAccounts(String fileName) {
+
+        // Null validation
+        if (fileName == null) {
             return false;
         }
 
-        try(FileWriter writer = new FileWriter(fileName)){
-            for(int i = 0; i < bankAccounts.length; i++){
-                if (bankAccounts[i] != null){
+        try (FileWriter writer = new FileWriter(fileName)) {
+            for (int i = 0; i < bankAccounts.length; i++) {
+                if (bankAccounts[i] != null) {
                     String bankLine = bankAccounts[i].accountToCSV(bankAccounts[i]);
-                    writer.write(bankLine+System.lineSeparator());
+                    writer.write(bankLine + System.lineSeparator());
                 }
-            } return true;
+            }
+            return true;
 
-        } catch(IOException e) {//Bad filename validation
+        } catch (IOException e) {// Bad fileName validation
             e.printStackTrace();
             return false;
         }
     }
 
-    //Transactions
-    /*
-     * 
+    // Transactions
+    /**Processes and executes transactions from a CSV file.
+     * @param inputFile the name of the CSV file given as a string.
      */
-    public void processTransactions(){
-        //TODO Must include validation for no account found
-        Transaction.createTransaction()
+    public void processTransactions(String inputFile) {
+        try (Scanner scanFile = new Scanner(inputFile)) {
+            //Declarations
+            Account modAccount;
+            Transaction trans;
+
+            while (scanFile.hasNextLine()) {
+                trans = Transaction.createTransaction(scanFile.nextLine());
+                // Null validation and missing account validation
+                modAccount = getAccountByID(trans.accountID);
+                if (trans != null && modAccount != null) {
+                    trans.execute(modAccount);
+                    // TODO Audit phase needs to register that the account WAS found.
+                } // TODO audit phase needs to register that the account was NOT found or the
+                  // transaction was invalid.
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
     }
 }

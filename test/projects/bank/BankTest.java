@@ -86,7 +86,7 @@ public class BankTest {
         bank.addAccount(account4);
 
         //write accounts
-        bank.writeAccounts("accountsTest.csv");
+        bank.writeAccounts("/workspaces/cmsc131-f25/test/projects/bank/accountsTest.csv");
         assertEquals(true, bank.writeAccounts("accountsTest.csv"));
         assertEquals(false, bank.writeAccounts(null));
         //TODO I don't think I should be able to make a file with no file extension but that's a problem for later seeing as I fixed several right now.

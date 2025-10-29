@@ -30,6 +30,12 @@ public abstract class Transaction {
     abstract boolean validate(Account account);
 
     // Transaction Factory
+    /**Creates a transaction from a given CSV string in the format: transaction type, account ID, amount to change.
+     * @param transactionLine a CSV line as a string.
+     * @see tokenType Transaction Type (withdrawal/deposit)
+     * @see tokenID Account ID (String)
+     * @see tokenAmount Amount to be changed (double)
+     */
     public static Transaction createTransaction(String transactionLine) {
         if (transactionLine != null) {
             // Tokens Array
