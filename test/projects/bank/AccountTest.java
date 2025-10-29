@@ -17,7 +17,8 @@ public class AccountTest {
         Account account = new Account("N000000", "Aime Naut Aperson", 9245.1489, AccountTypeEnum.CHECKING);
         assertEquals("N000000", account.getID());
         assertEquals("Aime Naut Aperson", account.getName());
-        assertEquals(9245.1489, account.getBal());
+        //Checks rounding as well.
+        assertEquals(9245.15, account.getBal());
         assertEquals(AccountTypeEnum.CHECKING, account.getType());
     }
     @Test
@@ -26,5 +27,14 @@ public class AccountTest {
         assertEquals("checking,EJ521953,Jim Yim Whim,125923.55", account.accountToCSV(account));
         assertEquals(account.getID(), Account.CSVToAccount("checking,EJ521953,Jim Yim Whim,125923.55").getID());
         assertEquals(account.getType(), Account.CSVToAccount("checking,EJ521953,Jim Yim Whim,125923.55").getType());
+        //Null factory
+        //Account account2;
+        //TODO Assertthrows on an exception
+        //assertThrows(NullPointerException.class,);
+    }
+    @Test
+    public void testCreditDebit(){
+        Account account = new Account("R582925","Joseph S",125.59,AccountTypeEnum.CHECKING);
+        
     }
 }

@@ -21,6 +21,10 @@ public class Bank {
      * @param newAccount
     */
     public boolean addAccount(Account newAccount){
+        //Null validation
+        if(newAccount == null){
+            return false;
+        }
         for(int i= 0; i < bankAccounts.length; i++){
             if (bankAccounts[i] == null){
                 bankAccounts[i] = newAccount;
@@ -45,7 +49,8 @@ public class Bank {
      * @param accountName Name of the accounts to be removed as a string.
      */
     public void removeAccountsByName(String accountName){
-        for (int i = 0; i < numberOfAccounts; i++) {
+        int numberOfAccountsStatic = numberOfAccounts;
+        for (int i = 0; i < numberOfAccountsStatic; i++) {
             if (bankAccounts[i].getName().equals(accountName)) {
             bankAccounts[i] = null;
             numberOfAccounts--;
@@ -134,13 +139,22 @@ public class Bank {
             return null;
         } else return accounts;
     }
+
+//Bank to CSV methods
+    
     /**Loads accounts into a bank array object from a CSV file.
      * @param fileName Name of the CSV file as a String.
      */
     public boolean loadAccounts(String fileName){
+        //Null validation
+        if(fileName == null){
+            return false;
+        }
+
         //Declarations
         File inputFile = new File(fileName);
         int i=0;
+
         //Function
         try(Scanner scanFile = new Scanner(inputFile)){
             while (scanFile.hasNextLine()){
@@ -151,8 +165,10 @@ public class Bank {
                 //Move to the next array position
                 i++;
                 // TODO end
+                // TODO what do you mean by this (is it necessary). I may get the chance to ask after class though.
             }
             return true;
+
         } //Error Catching
         catch(FileNotFoundException e) {
             e.printStackTrace();
@@ -164,19 +180,32 @@ public class Bank {
      * @param fileName Name of the CSV file as a String.
     */
     public boolean writeAccounts(String fileName){
+
+        //Null validation
+        if(fileName == null){
+            return false;
+        }
+
         try(FileWriter writer = new FileWriter(fileName)){
             for(int i = 0; i < bankAccounts.length; i++){
                 if (bankAccounts[i] != null){
                     String bankLine = bankAccounts[i].accountToCSV(bankAccounts[i]);
                     writer.write(bankLine+System.lineSeparator());
-                    // "\n" is ok because your dev container runs linux
-                    // but consider using the os-agnostic System.lineSeparator()
                 }
-                return true;
-            }
-        } catch(IOException e) {
+            } return true;
+
+        } catch(IOException e) {//Bad filename validation
             e.printStackTrace();
+            return false;
         }
-        return false;
+    }
+
+    //Transactions
+    /*
+     * 
+     */
+    public void processTransactions(){
+        //TODO Must include validation for no account found
+        Transaction.createTransaction()
     }
 }

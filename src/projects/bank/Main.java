@@ -8,6 +8,7 @@ public class Main {
     public static void main(String[] args) {
         phase1();
         phase2();
+        phase3();
     }
 
     public static void phase1() {
@@ -71,5 +72,9 @@ public class Main {
 
         String outputFilename = "data/phase2.csv";
         bank.writeAccounts(outputFilename);
+    }
+    //TODO phase 3 in main
+    public static void phase3() {
+
     }
 }
