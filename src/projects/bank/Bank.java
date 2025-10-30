@@ -109,7 +109,7 @@ public class Bank {
     public int getAccountIndexById(String accountID) {
         if (numberOfAccounts != 0) {
             for (int i = 0; i < numberOfAccounts; i++) {
-                if (bankAccounts[i].getID() == accountID) {
+                if (bankAccounts[i].getID().equals(accountID)) {
                     return i;
                 }
             }
@@ -243,23 +243,28 @@ public class Bank {
     /**Processes and executes transactions from a CSV file.
      * @param inputFile the name of the CSV file given as a string.
      */
-    public void processTransactions(String inputFile) {
+    public void processTransactions(String fileName) {
+        File inputFile = new File(fileName);
         try (Scanner scanFile = new Scanner(inputFile)) {
             //Declarations
             Account modAccount;
             Transaction trans;
+            int index;
 
             while (scanFile.hasNextLine()) {
                 trans = Transaction.createTransaction(scanFile.nextLine());
+                index = getAccountIndexById(trans.accountID);
+                modAccount = bankAccounts[index];
                 // Null validation and missing account validation
-                modAccount = getAccountByID(trans.accountID);
                 if (trans != null && modAccount != null) {
                     trans.execute(modAccount);
+                    bankAccounts[index] = modAccount;
                     // TODO Audit phase needs to register that the account WAS found.
                 } // TODO audit phase needs to register that the account was NOT found or the
                   // transaction was invalid.
             }
         } catch (Exception e) {
+            e.printStackTrace();
             // TODO: handle exception
         }
     }

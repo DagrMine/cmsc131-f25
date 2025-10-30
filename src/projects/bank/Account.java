@@ -76,21 +76,16 @@ public class Account {
     }
 
     //Credit and Debit methods
-    /** Adds an amount of money to a given account. Throws an IllegalArgumentException if the amount is invalid.
+    /** Adds an amount of money to a given account.
      * @param balanceChange Added money as double.
      */
     public void credit(double balanceChange){
-        if (balanceChange > 0){
-            accountBal = roundBalance(balanceChange+accountBal);
-        } else throw new IllegalArgumentException("Credited amount must be greater than 0.");
+        accountBal = roundBalance(balanceChange+accountBal);
     }
-    /** Removes an amount of money from a given account. Throws an IllegalArgumentException if the amount is invalid.
+    /** Removes an amount of money from a given account.
      * @param balanceChange Removed money as double.
      */
     public void debit(double balanceChange){
-        //Checks if the amount debited is less than 0 and the balance is greater than the amount changed.
-        if((balanceChange > 0) && (accountBal >= balanceChange)){
             accountBal = roundBalance(accountBal-balanceChange);
-        } else throw new IllegalArgumentException("Debited amount must be a positive number greater than 0.");
     }
 }

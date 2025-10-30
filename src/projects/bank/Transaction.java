@@ -39,8 +39,9 @@ public abstract class Transaction {
     public static Transaction createTransaction(String transactionLine) {
         if (transactionLine != null) {
             // Tokens Array
-            String tokens[] = transactionLine.split(",");
+            String[] tokens = transactionLine.split(",");
             // Tokens
+            System.out.println(tokens[0]);
             String tokenType = tokens[0];
             String tokenID = tokens[1];
             double tokenAmount;
@@ -51,7 +52,7 @@ public abstract class Transaction {
             } catch (Exception e) {
                 return null;
             }
-            if (tokenAmount <= 0) {
+            if (tokenAmount < 0) {
                 return null;
             }
 

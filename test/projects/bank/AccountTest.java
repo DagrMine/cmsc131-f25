@@ -35,6 +35,9 @@ public class AccountTest {
     @Test
     public void testCreditDebit(){
         Account account = new Account("R582925","Joseph S",125.59,AccountTypeEnum.CHECKING);
-        
+        account.debit(5);
+        assertEquals(120.59, account.getBal());
+        account.credit(10);
+        assertEquals(130.59, account.getBal());
     }
 }

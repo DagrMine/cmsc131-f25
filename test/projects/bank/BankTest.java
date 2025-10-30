@@ -127,5 +127,12 @@ public class BankTest {
     // TODO test find method failure returns correct value
     // Done test loadAccounts failure mode returns correct value
     // Done test loadAccounts returns true on succeed
-
+    
+    @Test
+    public void testBankTransactions() {
+        Bank bank = new Bank();
+        bank.loadAccounts("data/Test/accountsTest.csv");
+        bank.processTransactions("data/Test/transactionsTest.csv");
+        bank.writeAccounts("data/Test/accountsActual.csv");
+    }
 }
