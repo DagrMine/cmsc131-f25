@@ -25,6 +25,9 @@ public abstract class Transaction {
     }
 
     // Abstract methods
+    /** Executes a transaction, credit for deposit or debit for withdrawal.
+     * @param account The account to add (credit) or remove (debit) funds from.
+     */
     abstract void execute(Account account);
 
     abstract boolean validate(Account account);
@@ -41,7 +44,6 @@ public abstract class Transaction {
             // Tokens Array
             String[] tokens = transactionLine.split(",");
             // Tokens
-            System.out.println(tokens[0]);
             String tokenType = tokens[0];
             String tokenID = tokens[1];
             double tokenAmount;

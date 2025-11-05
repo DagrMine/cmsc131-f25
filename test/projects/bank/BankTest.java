@@ -129,10 +129,26 @@ public class BankTest {
     // Done test loadAccounts returns true on succeed
     
     @Test
-    public void testBankTransactions() {
+    public void testBankTransactions() throws FileNotFoundException {
         Bank bank = new Bank();
         bank.loadAccounts("data/Test/accountsTest.csv");
         bank.processTransactions("data/Test/transactionsTest.csv");
         bank.writeAccounts("data/Test/accountsActual.csv");
+        //File and Scanner Declarations
+        File testFile = new File("data/Test/accountsExpected.csv");
+        File resultFile = new File("data/Test/accountsActual.csv");
+        Scanner testScan = new Scanner(testFile);
+        Scanner resultScan = new Scanner(resultFile);
+        //Declarations
+
+        //Assertions
+        //Checking whether each line is equal to its counterpart
+        assertEquals(testScan.nextLine(), resultScan.nextLine());
+        assertEquals(testScan.nextLine(), resultScan.nextLine());
+        assertEquals(testScan.nextLine(), resultScan.nextLine());
+        assertEquals(testScan.nextLine(), resultScan.nextLine());
+        
+        resultScan.close();
+        testScan.close();
     }
 }
