@@ -38,5 +38,7 @@ public class TransactionTest {
         assertEquals(null,testTransaction4);
         assertEquals(null,testTransaction5);
         assertEquals(testTransaction6.getClass(),testTransaction1.getClass());
+        String w = "eee";
+        w.contains("eee");
     }
 }

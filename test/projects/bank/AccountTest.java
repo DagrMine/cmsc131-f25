@@ -10,7 +10,7 @@ public class AccountTest {
     // TODO add data validation test for constructor
     // TODO static factory throws on null input
     // TODO static factory preserves data
-    // TODO toCSV output is correct
+    // Done toCSV output is correct
 
     @Test
     public void testConstructor() {
@@ -20,6 +20,7 @@ public class AccountTest {
         //Checks rounding as well.
         assertEquals(9245.15, account.getBal());
         assertEquals(AccountTypeEnum.CHECKING, account.getType());
+        //TODO Validation
     }
     @Test
     public void testParsing(){
@@ -29,6 +30,7 @@ public class AccountTest {
         assertEquals(account.getType(), Account.CSVToAccount("checking,EJ521953,Jim Yim Whim,125923.55").getType());
         //Null factory
         //Account account2;
+        assertNull(Account.CSVToAccount(null));
         //TODO Assertthrows on an exception
         //assertThrows(NullPointerException.class,);
     }

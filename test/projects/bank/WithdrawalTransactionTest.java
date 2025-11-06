@@ -1,4 +1,4 @@
-package projects;
+package projects.bank;
 
 import org.junit.Test;
 

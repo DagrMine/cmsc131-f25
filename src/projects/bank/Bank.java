@@ -14,6 +14,16 @@ public class Bank {
         bankAccounts = new Account[1000];
     }
 
+    // Made into a private method because I get the feeling I might want to use it
+    // later
+    //TODO Test reinitializing of bank
+    private void reInitializeBank() {
+        Account[] tempBank = new Account[bankAccounts.length];
+        System.arraycopy(bankAccounts, 0, tempBank, 0, bankAccounts.length);
+        bankAccounts = new Account[bankAccounts.length + 1000];
+        bankAccounts = tempBank;
+    }
+
     // Add and remove accounts functions
     // TODO copy account array into a new and bigger account array when the first
     // array is full.
@@ -29,6 +39,11 @@ public class Bank {
         if (newAccount == null) {
             return false;
         }
+        // Validates the last bank spot is open.
+        // If the bank is full it reinitializes the bank with a larger size.
+        if (bankAccounts[bankAccounts.length - 1] != null) {
+            reInitializeBank();
+        }
         for (int i = 0; i < bankAccounts.length; i++) {
             if (bankAccounts[i] == null) {
                 bankAccounts[i] = newAccount;
@@ -36,9 +51,9 @@ public class Bank {
                 return true;
             }
         }
-        System.arraycopy(newAccount, numberOfAccounts, newAccount, numberOfAccounts, numberOfAccounts);
+        // TODO Print unique message to audit log
         System.out.println("There are no available account slots. Please change internally later.");
-        return false;
+        return true;
     }
 
     // Still not necessary buuuuuuuuut I feel it would be incomplete without it.
@@ -72,7 +87,8 @@ public class Bank {
 
     /**
      * Count the number of accounts
-     * 
+     * Literally just returns the number of accounts. The counting is done by add
+     * and remove functions. May cause issues if something goes wrong.
      */
     public int countAccounts() {
         return numberOfAccounts;
@@ -240,13 +256,15 @@ public class Bank {
     }
 
     // Transactions
-    /**Processes and executes transactions from a CSV file.
+    /**
+     * Processes and executes transactions from a CSV file.
+     * 
      * @param inputFile the name of the CSV file given as a string.
      */
     public boolean processTransactions(String fileName) {
         File inputFile = new File(fileName);
         try (Scanner scanFile = new Scanner(inputFile)) {
-            //Declarations
+            // Declarations
             Account modAccount;
             Transaction trans;
             int index;
