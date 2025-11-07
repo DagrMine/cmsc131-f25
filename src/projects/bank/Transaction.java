@@ -1,17 +1,25 @@
+/* TODO/comments
+ * Validate id and amount in constructor
+ * you can simplify the transaction type logic in createTransaction
+     - use TransactionTypeEnum.valueOf to figure out what type of transaction to return. Just convert tokenID to uppercase first.
+     - use a simple if-else pattern to return a withdrawal or a deposit
+     - don't return null! your valueOf call will throw on your behalf if an invalid transaction type is passed
+     - NB: if you return null here, then you'll have to worry about your `transaction == null` in all downstream code. that will be so annoying
+ */
 package projects.bank;
 
 public abstract class Transaction {
     // Declarations
-    protected String accountID;
-    protected double transactionAmount;
+    private String accountID;
+    private double transactionAmount;
 
     // Constructor
     /**
-     * @param ID     account ID.
+     * @param id     account ID.
      * @param amount amount deposited or withdrawn.
      */
-    protected Transaction(String ID, double amount) {
-        accountID = ID;
+    protected Transaction(String id, double amount) {
+        accountID = id;
         transactionAmount = amount;
     }
 

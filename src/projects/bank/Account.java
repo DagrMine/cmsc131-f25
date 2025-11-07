@@ -56,7 +56,7 @@ public class Account {
      * @param accountLine input a comma separated string that contains the (in this
      *                    order) typing, ID, name, and balance.
      */
-    public static Account CSVToAccount(String accountLine) {
+    public static Account csvToAccount(String accountLine) {
         if (accountLine != null) {
             String[] tokens = accountLine.split(",");
             String tokenID = tokens[1];
@@ -66,6 +66,7 @@ public class Account {
             Account returnedAccount = new Account(tokenID, tokenName, tokenBal, tokenType);
             return returnedAccount;
         } else return null;
+            // make this an InvalidArgumentException. that's more informative
             //throw new NullPointerException("CSV line cannot be null.");
     }
 
@@ -88,6 +89,7 @@ public class Account {
 
     // Rounds the balance to two decimal places. Fun fact about Math.round, 100 is
     // different from 100.0
+    // [dusel] 100 is an int and 100.0 is a floating point
     // Another way of doing this would be:
     // accountBal = Math.round(acBal*100.0)/100.0;
     // But I already did it this way soooo i'll leave it as a knowledge reference

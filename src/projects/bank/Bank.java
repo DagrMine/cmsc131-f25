@@ -1,3 +1,9 @@
+/** TODO / comments on processTransactions
+ * your index value could be -1, which will throw an ArrayIndexOutOfBoundsException. you need to correct you code to handle this situation. currently it looks like you're assuming that bankAccounts[-1] == null but that's not how array indexing works in Java
+ * again, if you block accounts and transactions from being null, your code will be cleaner
+ * you aren't using your transactions' validate method. type CTRL+F and search for .validate to see for yourself. red flag! 
+ * it's better to return an int that represets how many transactions were processed. returning a boolean is like saying "zero transactions processed" (false) or "at least one transaction was processed" (true). more precision makes the code more testable!
+ */
 package projects.bank;
 
 import java.io.File;
@@ -215,7 +221,7 @@ public class Bank {
                 if (numberOfAccounts == bankAccounts.length){
                     reInitializeBank();
                 }
-                bankAccounts[i] = Account.CSVToAccount(scanFile.nextLine());
+                bankAccounts[i] = Account.csvToAccount(scanFile.nextLine());
                 // increases account counter for use in the countAccounts function
                 numberOfAccounts++;
                 // Move to the next array position
@@ -274,7 +280,7 @@ public class Bank {
 
             while (scanFile.hasNextLine()) {
                 trans = Transaction.createTransaction(scanFile.nextLine());
-                index = getAccountIndexById(trans.accountID);
+                index = getAccountIndexById(trans.getAccountID());
                 modAccount = bankAccounts[index];
                 // Null validation and missing account validation
                 if (trans != null && modAccount != null) {

@@ -6,7 +6,7 @@ public class DepositTransaction extends Transaction{
     }
     @Override
     public void execute(Account account){
-        account.credit(transactionAmount);
+        account.credit(getTransactionAmount());
     }
     @Override
     public boolean validate(Account account){

@@ -75,6 +75,10 @@ public class Main {
     }
     //TODO phase 3 in main
     public static void phase3() {
-
+        Bank bank = new Bank();
+        bank.loadAccounts("data/accounts.csv"); // ignore output
+        boolean step2 = bank.processTransactions("data/transactions.csv"); // oughta be an int
+        bank.writeAccounts("data/accounts-Phase3Out.csv");
+        System.out.println("Number of transactions processed: " + step2); // oughta be an int
     }
 }

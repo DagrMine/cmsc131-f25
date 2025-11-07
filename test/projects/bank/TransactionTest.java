@@ -1,3 +1,9 @@
+/* TODO
+ * test data validation for constructor (you test the static factory only)
+ * test validation logic
+ * test correctness of execute method 
+ * consider doing your withdrawal/deposit testing in this file, for simplicity
+ */
 package projects.bank;
 
 import org.junit.jupiter.api.Test;
@@ -10,9 +16,17 @@ public class TransactionTest {
         assertEquals("TestID",testTransaction.getAccountID());
         assertEquals(100,testTransaction.getTransactionAmount());
         //TODO why can I do this? I set all the variables to protected??? Do I need to set the abstract class to protected or something?
-        testTransaction.accountID = "to";
+        // testTransaction.accountID = "to";
+        /* dusel:
+         * your class attributes should be private, not protected
+         * if an exteral class (subclass or not) needs access, use the accessor method for that attribute, in this case getAccountID()
+         */
     }
 
+    /*
+     * dusel: please fix this to not return null
+     */
+    
     @Test
     public void testTransactionFactory(){
         Transaction testTransaction1 = Transaction.createTransaction("withdrawal,E111111,1000.35");
@@ -38,7 +52,7 @@ public class TransactionTest {
         assertEquals(null,testTransaction4);
         assertEquals(null,testTransaction5);
         assertEquals(testTransaction6.getClass(),testTransaction1.getClass());
-        String w = "eee";
-        w.contains("eee");
+        String w = "eee"; // um
+        w.contains("eee");  // wha?
     }
 }

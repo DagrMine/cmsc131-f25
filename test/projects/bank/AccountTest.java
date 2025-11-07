@@ -26,17 +26,22 @@ public class AccountTest {
     public void testParsing(){
         Account account = new Account("EJ521953", "Jim Yim Whim", 125923.55, AccountTypeEnum.CHECKING);
         assertEquals("checking,EJ521953,Jim Yim Whim,125923.55", account.accountToCSV(account));
-        assertEquals(account.getID(), Account.CSVToAccount("checking,EJ521953,Jim Yim Whim,125923.55").getID());
-        assertEquals(account.getType(), Account.CSVToAccount("checking,EJ521953,Jim Yim Whim,125923.55").getType());
+        assertEquals(account.getID(), Account.csvToAccount("checking,EJ521953,Jim Yim Whim,125923.55").getID());
+        assertEquals(account.getType(), Account.csvToAccount("checking,EJ521953,Jim Yim Whim,125923.55").getType());
         //Null factory
         //Account account2;
-        assertNull(Account.CSVToAccount(null));
+        assertNull(Account.csvToAccount(null));
         //TODO Assertthrows on an exception
         //assertThrows(NullPointerException.class,);
     }
     @Test
     public void testCreditDebit(){
-        Account account = new Account("R582925","Joseph S",125.59,AccountTypeEnum.CHECKING);
+        Account account = new Account(
+            "R582925",
+            "Joseph S",
+            125.59,
+            AccountTypeEnum.CHECKING
+        );
         account.debit(5);
         assertEquals(120.59, account.getBal());
         account.credit(10);

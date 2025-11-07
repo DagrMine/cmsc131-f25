@@ -1,3 +1,7 @@
+/** TODO/comments for testBankTransactions
+ * test whether success/failure returns false/true respectvely. even better, return an int and verify the correct number of transactions were processed
+ * 
+ */
 package projects.bank;
 
 //Imports
