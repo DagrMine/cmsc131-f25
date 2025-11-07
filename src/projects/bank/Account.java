@@ -1,7 +1,7 @@
 package projects.bank;
 
-//Imports
-//import java.util.Scanner;
+
+
 //Class
 public class Account {
     // Declarations

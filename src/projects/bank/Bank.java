@@ -17,15 +17,18 @@ public class Bank {
     // Made into a private method because I get the feeling I might want to use it
     // later
     //TODO Test reinitializing of bank
+    /**Re-initializes the current bank object with 1000 more account spaces.
+     * Used in the addAccount and loadAccounts methods
+     */
     private void reInitializeBank() {
         Account[] tempBank = new Account[bankAccounts.length];
         System.arraycopy(bankAccounts, 0, tempBank, 0, bankAccounts.length);
-        bankAccounts = new Account[bankAccounts.length + 1000];
+        bankAccounts = new Account[tempBank.length + 1000];
         bankAccounts = tempBank;
     }
 
     // Add and remove accounts functions
-    // TODO copy account array into a new and bigger account array when the first
+    // Done copy account array into a new and bigger account array when the first
     // array is full.
     /**
      * Adds an account to the bank at the next empty index in the array and returns
@@ -51,7 +54,7 @@ public class Bank {
                 return true;
             }
         }
-        // TODO Print unique message to audit log
+        // TODO Print unique message to audit log to change the bank size internally.
         System.out.println("There are no available account slots. Please change internally later.");
         return true;
     }
@@ -208,16 +211,16 @@ public class Bank {
         // Function
         try (Scanner scanFile = new Scanner(inputFile)) {
             while (scanFile.hasNextLine()) {
-                // The addAccount method is designed for adding one account to an already loaded
-                // bank and would be much more inefficient than doing this
+                //TODO Test reInitializeBank of loadAccounts method
+                if (numberOfAccounts == bankAccounts.length){
+                    reInitializeBank();
+                }
                 bankAccounts[i] = Account.CSVToAccount(scanFile.nextLine());
                 // increases account counter for use in the countAccounts function
                 numberOfAccounts++;
                 // Move to the next array position
                 i++;
-                // TODO end
-                // TODO what do you mean by this (is it necessary). I may get the chance to ask
-                // after class though.
+                // TODO end - what do you mean by this? Did you write this or did VS?
             }
             return true;
 

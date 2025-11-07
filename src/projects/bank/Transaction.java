@@ -16,16 +16,28 @@ public abstract class Transaction {
     }
 
     // Return Methods
+    /**
+     * 
+     * @return The account ID associated with the transaction.
+     * 
+     */
     public String getAccountID() {
         return accountID;
     }
 
+    /**
+     * 
+     * @return The amount of money associated with the transaction.
+     * 
+     */
     public double getTransactionAmount() {
         return transactionAmount;
     }
 
     // Abstract methods
-    /** Executes a transaction, credit for deposit or debit for withdrawal.
+    /**
+     * Executes a transaction, credit for deposit or debit for withdrawal.
+     * 
      * @param account The account to add (credit) or remove (debit) funds from.
      */
     abstract void execute(Account account);
@@ -33,7 +45,10 @@ public abstract class Transaction {
     abstract boolean validate(Account account);
 
     // Transaction Factory
-    /**Creates a transaction from a given CSV string in the format: transaction type, account ID, amount to change.
+    /**
+     * Creates a transaction from a given CSV string in the format: transaction
+     * type, account ID, amount to change.
+     * 
      * @param transactionLine a CSV line as a string.
      * @see tokenType Transaction Type (withdrawal/deposit)
      * @see tokenID Account ID (String)
@@ -47,7 +62,7 @@ public abstract class Transaction {
             String tokenType = tokens[0];
             String tokenID = tokens[1];
             double tokenAmount;
-            
+
             // Validation against bad third [2] token
             try {
                 tokenAmount = Double.valueOf(tokens[2]);
