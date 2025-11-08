@@ -20,11 +20,13 @@ public class TransactionTest {
         /* dusel:
          * your class attributes should be private, not protected
          * if an exteral class (subclass or not) needs access, use the accessor method for that attribute, in this case getAccountID()
+         * TODO change variables to private in transaction class.
          */
     }
 
     /*
      * dusel: please fix this to not return null
+     * TODO Line 51-54
      */
     
     @Test
@@ -52,7 +54,7 @@ public class TransactionTest {
         assertEquals(null,testTransaction4);
         assertEquals(null,testTransaction5);
         assertEquals(testTransaction6.getClass(),testTransaction1.getClass());
-        String w = "eee"; // um
-        w.contains("eee");  // wha?
+        //was testing the contains method in class my bad
+        //moved to MainDagrMine
     }
 }

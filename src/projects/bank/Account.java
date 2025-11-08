@@ -77,13 +77,20 @@ public class Account {
      *                    string.
      */
     public String accountToCSV(Account accountLine) {
-        String type = accountLine.getType().name(); // to cast to a String, use accountLine.getType().name()
-        // Incredibly 'interesting' way of changing an account into a string. I'm
-        // commiting to it.
+        //TODO decide on whether this is necessary.
+        /*if (accountLine == null){
+            throw new NullPointerException("Invalid account in accountToCSV.");
+        }*/
+        //String type = accountLine.getType().name();
         // It combines the type, converted to a string, to lowercase, then combines it
         // with the rest of the account data as one string separated by commas.
-        String token = type.toLowerCase() + "," + accountLine.getID() + "," + accountLine.getName() + ","
-                + accountLine.getBal();
+        //String token = type.toLowerCase() + "," + accountLine.getID() + "," + accountLine.getName() + "," + accountLine.getBal();
+        String token = String.format("%s,%s,%s,%s", 
+        accountLine.getType().name().toLowerCase(), 
+        accountLine.getID(), 
+        accountLine.getName(),
+        accountLine.getBal()
+        );
         return token;
     }
 

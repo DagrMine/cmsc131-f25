@@ -2,7 +2,7 @@ package projects.bank;
 
 public class MainDagrMine {
     public static void main(String[] args) {
-        // Account Test Personal
+        // testing java
         test2();
     }
 
@@ -28,5 +28,10 @@ public class MainDagrMine {
         String stringle = "A list of audit types: %s %s %s %s";
         String stringle2 = String.format(stringle, AuditTypeEnum.ALERT,AuditTypeEnum.ERROR,AuditTypeEnum.WARN,AuditTypeEnum.INFO);
         System.out.println(stringle2);
+        String w = "eee";
+        w.contains("eee");
+    }
+    private static void test3(){
+        //TODO Test array copy functionality from the bank class.
     }
 }

@@ -48,9 +48,10 @@ public abstract class Transaction {
      * 
      * @param account The account to add (credit) or remove (debit) funds from.
      */
-    abstract void execute(Account account);
+    abstract void execute(Account account, Audit audit);
 
     abstract boolean validate(Account account);
+    //TODO Validate method isnt made or used anywhere.
 
     // Transaction Factory
     /**
@@ -75,6 +76,7 @@ public abstract class Transaction {
             try {
                 tokenAmount = Double.valueOf(tokens[2]);
             } catch (Exception e) {
+                
                 return null;
             }
             if (tokenAmount < 0) {

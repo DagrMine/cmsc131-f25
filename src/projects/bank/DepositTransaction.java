@@ -5,8 +5,9 @@ public class DepositTransaction extends Transaction{
         super(accountID,transactionAmount);
     }
     @Override
-    public void execute(Account account){
+    public void execute(Account account, Audit audit){
         account.credit(getTransactionAmount());
+        audit.write(this, "Deposit successfully executed for: " + getTransactionAmount(), AuditTypeEnum.INFO);
     }
     @Override
     public boolean validate(Account account){

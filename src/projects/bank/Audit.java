@@ -19,6 +19,9 @@ public class Audit {
      *         True if the initialization succeeds.
      */
     public boolean open(String fileName) {
+        if (fileName == null) {
+            return false;
+        }
         fileFile = new File(fileName);
         try {
             auditWriter = new FileWriter(fileFile);
@@ -38,7 +41,8 @@ public class Audit {
     public boolean close() {
         try {
             auditWriter.close();
-        } catch (IOException e) {
+            auditWriter = null;
+        } catch (Exception e) {
             return false;
         }
         return true;
@@ -47,6 +51,8 @@ public class Audit {
     // Private Methods
     // Another way to do this is by making a method that instead converts the enum
     // to a string. Idk if thats more efficient or not honestly.
+    //
+    // Currently Unused
     /**
      * Takes an AuditTypeEnum type and returns text that corresponds to each typing.
      * 
@@ -85,6 +91,8 @@ public class Audit {
             auditWriter.write(s);
         } catch (IOException e) {
             return false;
+            // TODO Handle exception
+            // Can't print to log but also dont want to throw.
         }
         return true;
     }
@@ -105,9 +113,11 @@ public class Audit {
      * @param infoType Type of information to write using AuditTypeEnum
      * @see AuditTypeEnum
      */
-    public void write(String textInfo, AuditTypeEnum infoType) {
+    public boolean write(String textInfo, AuditTypeEnum infoType) {
         // writeFile(auditType(infoType) + textInfo);
-        writeFile(String.format("|%s| %s", infoType, textInfo));
+        return writeFile(String.format("|%s| %s%n",
+                infoType,
+                textInfo));
     }
 
     /**
@@ -119,10 +129,18 @@ public class Audit {
      * @see AuditTypeEnum
      * @see Account
      */
-    public void write(Account account, String textInfo, AuditTypeEnum infoType) {
+    public boolean write(Account account, String textInfo, AuditTypeEnum infoType) {
+        String accountID;
+        if (account == null) {
+            accountID = "Null Account Error";
+        } else
+            accountID = account.getID();
         // String typeString = auditType(infoType);
         // Old writeFile(typeString + textInfo + " Account ID: " + account.getID());
-        writeFile(String.format("|%s| %s Account ID: %s", infoType, textInfo, account.getID()));
+        return writeFile(String.format("|%s| %s |Account ID: %s|%n",
+                infoType,
+                textInfo,
+                accountID));
     }
 
     /**
@@ -134,10 +152,19 @@ public class Audit {
      * @see AuditTypeEnum
      * @see Transaction
      */
-    public void write(Transaction transaction, String textInfo, AuditTypeEnum infoType) {
+    public boolean write(Transaction transaction, String textInfo, AuditTypeEnum infoType) {
+        String transactionID;
+        String logMessage;
+        if (transaction == null) {
+            transactionID = "Null Transaction Error";
+        } else
+            transactionID = transaction.getAccountID();
+            logMessage = textInfo;
         // Old writeFile(typeString + textInfo + " Transaction ID: " +
         // transaction.getAccountID());
-        writeFile(String.format("|%s| %s Transaction ID: %s", infoType, textInfo, transaction.getAccountID()));
+        return writeFile(String.format("|%s| %s |Transaction ID: %s|%n",
+                infoType,
+                logMessage,
+                transactionID));
     }
-
 }

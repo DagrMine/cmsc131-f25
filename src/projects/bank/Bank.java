@@ -15,6 +15,12 @@ import java.util.Scanner;
 public class Bank {
     private Account[] bankAccounts;
     private int numberOfAccounts = 0;
+    public Audit bankAudit = new Audit();
+
+    //
+    // Category:
+    // Initialization
+    //
 
     public Bank() {
         bankAccounts = new Account[1000];
@@ -22,8 +28,9 @@ public class Bank {
 
     // Made into a private method because I get the feeling I might want to use it
     // later
-    //TODO Test reinitializing of bank
-    /**Re-initializes the current bank object with 1000 more account spaces.
+    // TODO Test reinitializing of bank
+    /**
+     * Re-initializes the current bank object with 1000 more account spaces.
      * Used in the addAccount and loadAccounts methods
      */
     private void reInitializeBank() {
@@ -31,11 +38,31 @@ public class Bank {
         System.arraycopy(bankAccounts, 0, tempBank, 0, bankAccounts.length);
         bankAccounts = new Account[tempBank.length + 1000];
         bankAccounts = tempBank;
+        bankAudit.write("Bank reinitialized. Change bank size internally later.", AuditTypeEnum.ERROR);
     }
 
+    // Audit init
+    /**
+     * Initializes the bankAudit object in the bank class.
+     * 
+     * @param logFileName the file directory/name as a string. Defaults to
+     *                    data/Logs/bank.log.
+     * 
+     */
+    public void initializeAudit(String logFileName) {
+        // Default file location
+        String fileName = "data/Logs/bank.log";
+        if (logFileName != null) {
+            fileName = logFileName;
+        }
+        bankAudit.open(fileName);
+    }
+
+    //
+    // Category:
     // Add and remove accounts functions
-    // Done copy account array into a new and bigger account array when the first
-    // array is full.
+    //
+
     /**
      * Adds an account to the bank at the next empty index in the array and returns
      * true if it succeeds.
@@ -60,8 +87,6 @@ public class Bank {
                 return true;
             }
         }
-        // TODO Print unique message to audit log to change the bank size internally.
-        System.out.println("There are no available account slots. Please change internally later.");
         return true;
     }
 
@@ -94,6 +119,11 @@ public class Bank {
         }
     }
 
+    //
+    // Category:
+    // Accessor Methods
+    //
+
     /**
      * Count the number of accounts
      * Literally just returns the number of accounts. The counting is done by add
@@ -102,8 +132,6 @@ public class Bank {
     public int countAccounts() {
         return numberOfAccounts;
     }
-
-    // Search Functions
 
     /**
      * Input an account ID to return a bank account.
@@ -197,7 +225,10 @@ public class Bank {
             return accounts;
     }
 
-    // Bank to CSV methods
+    //
+    // Category:
+    // Bank CSV methods
+    //
 
     /**
      * Loads accounts into a bank array object from a CSV file.
@@ -217,8 +248,8 @@ public class Bank {
         // Function
         try (Scanner scanFile = new Scanner(inputFile)) {
             while (scanFile.hasNextLine()) {
-                //TODO Test reInitializeBank of loadAccounts method
-                if (numberOfAccounts == bankAccounts.length){
+                // TODO Test reInitializeBank of loadAccounts method
+                if (numberOfAccounts == bankAccounts.length) {
                     reInitializeBank();
                 }
                 bankAccounts[i] = Account.csvToAccount(scanFile.nextLine());
@@ -226,7 +257,6 @@ public class Bank {
                 numberOfAccounts++;
                 // Move to the next array position
                 i++;
-                // TODO end - what do you mean by this? Did you write this or did VS?
             }
             return true;
 
@@ -281,20 +311,26 @@ public class Bank {
             while (scanFile.hasNextLine()) {
                 trans = Transaction.createTransaction(scanFile.nextLine());
                 index = getAccountIndexById(trans.getAccountID());
-                modAccount = bankAccounts[index];
+                // TODO this will probably throw if the nexLine input is null. I just can't
+                // fathom how that would happen so i'm not sure if I need to fix it.
+                if (index >= 0) {
+                    modAccount = bankAccounts[index];
+                } else {
+                    bankAudit.write(trans, "Account not found while processing transactions.", AuditTypeEnum.WARN);
+                    modAccount = null;
+                }
                 // Null validation and missing account validation
                 if (trans != null && modAccount != null) {
-                    trans.execute(modAccount);
+                    trans.execute(modAccount, bankAudit);
                     bankAccounts[index] = modAccount;
-                    // TODO Audit phase needs to register that the account WAS found.
-                } // TODO audit phase needs to register that the account was NOT found or the
-                  // transaction was invalid.
+                } else {
+                    bankAudit.write(trans, "Transaction not found while processing transactions.", AuditTypeEnum.WARN);
+                }
             }
             return true;
-        } catch (Exception e) {
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
             return false;
-            // TODO: handle exception
         }
     }
 }
