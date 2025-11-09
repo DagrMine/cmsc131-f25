@@ -1,10 +1,10 @@
 package projects.bank;
 
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Scanner;
 
 public class Audit {
     // Declarations
@@ -90,9 +90,14 @@ public class Audit {
         try {
             auditWriter.write(s);
         } catch (IOException e) {
+            e.printStackTrace();
             return false;
             // TODO Handle exception
             // Can't print to log but also dont want to throw.
+        } catch (NullPointerException e2) {
+            // I dont want to print this error because this just implicitly happens if the
+            // auditor has not been initialized which messes with my tests.
+            return false;
         }
         return true;
     }
@@ -159,7 +164,7 @@ public class Audit {
             transactionID = "Null Transaction Error";
         } else
             transactionID = transaction.getAccountID();
-            logMessage = textInfo;
+        logMessage = textInfo;
         // Old writeFile(typeString + textInfo + " Transaction ID: " +
         // transaction.getAccountID());
         return writeFile(String.format("|%s| %s |Transaction ID: %s|%n",

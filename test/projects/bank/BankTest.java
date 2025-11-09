@@ -65,10 +65,12 @@ public class BankTest {
         bank.addAccount(account4);
         //Return an account using the array index number
         assertEquals(account2,bank.getAccountByIndex(1));
-        assertEquals(null,bank.getAccountByIndex(6));
+        assertNull(bank.getAccountByIndex(6));
         //Return accounts from a given name
         assertEquals(bank.getAccountsByNameString("Zelda"),"1,2,3,");
+        assertNull(bank.getAccountsByNameString(null));
         assertEquals(bank.getAccountsByNameArray("Zelda")[2].getID(),"J516208");
+        assertNull(bank.getAccountsByNameArray(null));
         //Count the number of active accounts
         assertEquals(4,bank.countAccounts());
         //Return an account by its ID
@@ -76,7 +78,25 @@ public class BankTest {
         //Return an account index using its ID
         assertEquals(0,bank.getAccountIndexById("E111111"));
     }
-
+    @Test
+    public void testReInitializeMethod(){
+        Bank bank = new Bank();
+        Account account = new Account("K124205","Everett",1000, AccountTypeEnum.CHECKING);
+        assertTrue(bank.addAccountByIndex(999, account));
+        bank.addAccountByIndex(998, account);
+        //Add account triggers reinitialization if the last array position is full
+        assertTrue(bank.addAccount(account));
+        //Test if data is retained
+        assertEquals(bank.getAccountByIndex(998),account);
+        //Test if the bank is larger
+        assertTrue(bank.addAccountByIndex(1050, account));
+        assertEquals(bank.getAccountByIndex(1050), account);
+        //DO IT AGAIN
+        bank.addAccountByIndex(1999, account);
+        bank.addAccount(account);
+        assertTrue(bank.addAccountByIndex(2050, account));
+        assertEquals(bank.getAccountByIndex(2050), account);
+    }
     @Test  
     public void testWriteAccounts() {
         Bank bank = new Bank();
@@ -118,6 +138,8 @@ public class BankTest {
         //load accounts
         //ENSURE THIS STEP IS DONE WITH A WORKING ACCOUNTSTEST.CSV FILE ALREADY MADE
         Bank bank = new Bank();
+        assertFalse(bank.loadAccounts(null));
+        assertFalse(bank.loadAccounts("AHHHHHHHHHHHHHHHHHHHHHH.jpg"));
         assertEquals(true, bank.loadAccounts("accountsTest.csv"));
         Account account2 = new Account("G124052","Zelda", 4125.3, AccountTypeEnum.CHECKING);
         //verify accounts are loaded
@@ -127,8 +149,11 @@ public class BankTest {
         assertEquals(false, bank.loadAccounts(null));
         assertEquals(false, bank.loadAccounts("oneWholeSkib.csv"));
     } 
-
-    // TODO test find method failure returns correct value
+    @Test
+    public void testReInitializeOfLoadAccounts(){
+        //TODO I need a way to test this that doesnt involve making a file with 1000+ accounts.
+    }
+    // Done test find method failure returns correct value
     // Done test loadAccounts failure mode returns correct value
     // Done test loadAccounts returns true on succeed
     

@@ -15,12 +15,9 @@ public class TransactionTest {
         WithdrawalTransaction testTransaction = new WithdrawalTransaction("TestID", 100);
         assertEquals("TestID",testTransaction.getAccountID());
         assertEquals(100,testTransaction.getTransactionAmount());
-        //TODO why can I do this? I set all the variables to protected??? Do I need to set the abstract class to protected or something?
-        // testTransaction.accountID = "to";
         /* dusel:
          * your class attributes should be private, not protected
          * if an exteral class (subclass or not) needs access, use the accessor method for that attribute, in this case getAccountID()
-         * TODO change variables to private in transaction class.
          */
     }
 
@@ -54,7 +51,5 @@ public class TransactionTest {
         assertEquals(null,testTransaction4);
         assertEquals(null,testTransaction5);
         assertEquals(testTransaction6.getClass(),testTransaction1.getClass());
-        //was testing the contains method in class my bad
-        //moved to MainDagrMine
     }
 }

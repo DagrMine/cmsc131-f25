@@ -19,6 +19,10 @@ public abstract class Transaction {
      * @param amount amount deposited or withdrawn.
      */
     protected Transaction(String id, double amount) {
+        //TODO Test transaction validation.
+        if ((id == null)||(this.equals(null))||(amount < 0)) {
+            throw new IllegalArgumentException("Transaction data cannot be null or less than 0.");
+        }
         accountID = id;
         transactionAmount = amount;
     }

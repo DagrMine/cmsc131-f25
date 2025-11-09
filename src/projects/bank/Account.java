@@ -1,7 +1,5 @@
 package projects.bank;
 
-
-
 //Class
 public class Account {
     // Declarations
@@ -9,7 +7,6 @@ public class Account {
     private double accountBal;
     private AccountTypeEnum accountType;
 
-    // TODO General data validation for the account class
     /**
      * Stores account information
      * 
@@ -19,13 +16,30 @@ public class Account {
      * @param acType stores account typing (CHECKING or SAVINGS) as an Enum
      */
     public Account(String acID, String acName, double acBal, AccountTypeEnum acType) {
-        // TODO add data validation for String and AccountTypeEnum arguments
-        // TODO Idk what this means really. I forgot to ask after class.
+        // TODO Test account data validation
+        // Literally just "Is any account value null or less than 0"
+        if ((acID == null) || (acName == null) || (acBal < 0) || (acType == null)) {
+            // TODO may have to change this when we do penalties because it prevents
+            // overdraft.
+            throw new IllegalArgumentException("Account data cannot be null or less than 0.");
+        }
         // Declarations/Assignments
         accountID = acID;
         accountName = acName;
         accountBal = roundBalance(acBal);
         accountType = acType;
+    }
+
+    // Private Methods
+    // Rounds the balance to two decimal places. Fun fact about Math.round, 100 is
+    // different from 100.0
+    // [dusel] 100 is an int and 100.0 is a floating point
+    // I forgot about floats. Using Double.valueOf is probably better then.
+    // Another way of doing this would be:
+    // accountBal = Math.round(acBal*100.0)/100.0;
+    // But I already did it this way soooo i'll leave it as a knowledge reference
+    private double roundBalance(double balanceToRound) {
+        return Double.valueOf(Math.round(Double.valueOf(balanceToRound * 100))) / 100;
     }
 
     // Accessors
@@ -65,9 +79,9 @@ public class Account {
             AccountTypeEnum tokenType = AccountTypeEnum.valueOf(tokens[0].toUpperCase());
             Account returnedAccount = new Account(tokenID, tokenName, tokenBal, tokenType);
             return returnedAccount;
-        } else return null;
-            // make this an InvalidArgumentException. that's more informative
-            //throw new NullPointerException("CSV line cannot be null.");
+        } else {
+            throw new IllegalArgumentException("CSV line cannot be null.");
+        }
     }
 
     /**
@@ -77,33 +91,17 @@ public class Account {
      *                    string.
      */
     public String accountToCSV(Account accountLine) {
-        //TODO decide on whether this is necessary.
-        /*if (accountLine == null){
-            throw new NullPointerException("Invalid account in accountToCSV.");
-        }*/
-        //String type = accountLine.getType().name();
+        // String type = accountLine.getType().name();
         // It combines the type, converted to a string, to lowercase, then combines it
         // with the rest of the account data as one string separated by commas.
-        //String token = type.toLowerCase() + "," + accountLine.getID() + "," + accountLine.getName() + "," + accountLine.getBal();
-        String token = String.format("%s,%s,%s,%s", 
-        accountLine.getType().name().toLowerCase(), 
-        accountLine.getID(), 
-        accountLine.getName(),
-        accountLine.getBal()
-        );
+        // String token = type.toLowerCase() + "," + accountLine.getID() + "," +
+        // accountLine.getName() + "," + accountLine.getBal();
+        String token = String.format("%s,%s,%s,%s",
+                accountLine.getType().name().toLowerCase(),
+                accountLine.getID(),
+                accountLine.getName(),
+                accountLine.getBal());
         return token;
-    }
-
-    // Rounds the balance to two decimal places. Fun fact about Math.round, 100 is
-    // different from 100.0
-    // [dusel] 100 is an int and 100.0 is a floating point
-    // Another way of doing this would be:
-    // accountBal = Math.round(acBal*100.0)/100.0;
-    // But I already did it this way soooo i'll leave it as a knowledge reference
-    // Also made it into its own method because I want to use it multiple times but
-    // dont want to rewrite it several times.
-    private double roundBalance(double balanceToRound) {
-        return Double.valueOf(Math.round(Double.valueOf(balanceToRound * 100))) / 100;
     }
 
     // Credit and Debit methods

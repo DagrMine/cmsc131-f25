@@ -25,10 +25,6 @@ public class Bank {
     public Bank() {
         bankAccounts = new Account[1000];
     }
-
-    // Made into a private method because I get the feeling I might want to use it
-    // later
-    // TODO Test reinitializing of bank
     /**
      * Re-initializes the current bank object with 1000 more account spaces.
      * Used in the addAccount and loadAccounts methods
@@ -37,7 +33,7 @@ public class Bank {
         Account[] tempBank = new Account[bankAccounts.length];
         System.arraycopy(bankAccounts, 0, tempBank, 0, bankAccounts.length);
         bankAccounts = new Account[tempBank.length + 1000];
-        bankAccounts = tempBank;
+        System.arraycopy(tempBank,0,bankAccounts,0,tempBank.length);
         bankAudit.write("Bank reinitialized. Change bank size internally later.", AuditTypeEnum.ERROR);
     }
 
@@ -88,6 +84,28 @@ public class Bank {
             }
         }
         return true;
+    }
+
+    /**
+     * Adds an account to a given index within a bank object. This method is almost
+     * exclusively for testing purposes.
+     * 
+     * @param index index number, 0 - 999 by default.
+     * @param newAccount account to be added.
+     * @return false, if the account is null or the index number is out of bounds.
+     * 
+     */
+    public boolean addAccountByIndex(int index, Account newAccount) {
+        if (newAccount != null) {
+            try {
+                bankAccounts[index] = newAccount;
+            } catch (IndexOutOfBoundsException e) {
+                e.printStackTrace();
+                return false;
+            }
+            return true;
+        } else
+            return false;
     }
 
     // Still not necessary buuuuuuuuut I feel it would be incomplete without it.
@@ -219,7 +237,7 @@ public class Bank {
             }
         }
         // Null validation
-        if (accounts[0].equals(null)) {
+        if (accounts[0] == null) {
             return null;
         } else
             return accounts;
