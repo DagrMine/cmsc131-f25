@@ -32,6 +32,14 @@ public class MainDagrMine {
         w.contains("eee");
     }
     private static void test3(){
-        //TODO Test array copy functionality from the bank class.
+        double a = 6;
+        double b = 2;
+        double c = 9;
+        double temp = Math.min(a, b);
+        double minimum = Math.min(temp, c);
+        temp = Math.max(0, 0);
+        if (minimum == a){
+
+        }
     }
 }
