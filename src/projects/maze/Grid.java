@@ -12,7 +12,8 @@ public class Grid {
 
     public boolean insertCell(Cell cell) {
         if (cellCount < cells.length) {
-            cells[++cellCount] = cell;
+            cells[cellCount] = cell;
+            cellCount++;
             return true;
         }
         return false;
@@ -37,6 +38,10 @@ public class Grid {
             allCells[idx] = cells[idx];
         }
         return allCells;
+    }
+
+    public int getArrayLength(){
+        return cells.length;
     }
 
 }
