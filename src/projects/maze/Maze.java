@@ -24,12 +24,20 @@ public class Maze {
     public Maze(int maxCells) {
         grid = new Grid(maxCells);
     }
+    public CellStatus getStart(){
+        grid.
+    }
+
+    public void insertCell(Cell cell){
+        grid.insertCell(cell);
+    }
 
     public void discoverAndSetupNeighbors() {
 
     }
 
     /**
+     * Writes the maze being called to a given filename.
      * Provided by Dusel. Assumes grid cell has a getStatus() method.
      * @param filename - Output filename.
      */

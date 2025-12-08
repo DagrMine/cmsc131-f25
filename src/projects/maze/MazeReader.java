@@ -31,7 +31,7 @@ public class MazeReader {
                         maze.insertCell(
                             new Cell(
                                 new Coords(row, col),
-                                CellStatus.valueOf(tokens[i]) 
+                                CellStatus.valueOf(tokens[i])
                             )
                         );
                     }

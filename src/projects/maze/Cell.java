@@ -24,19 +24,53 @@ package projects.maze;
 public class Cell {
 
     private final Coords coords;
+    private Coords[] neighborsCoords = new Coords[4];
     private boolean explored = false;
     private CellStatus status;
 
-    //Initializer
+    //Constructors
     public Cell(Coords c) {
         coords = c;
+    }
+    public Cell(Coords c, CellStatus s){
+        coords = c;
+        status = s;
     }
 
     //Accessors
     public Coords getCoords() {
         return coords;
     }
-
+    /**
+     * Get coordinates for a specific neighbor.
+     * @param r Row
+     * @param c Column
+     * @return returns the array index value of a given neighbor coordinate
+     */
+    public int getNeighborIndex(int r, int c){
+        Coords inputCoords = new Coords(r,c);
+        for (int index = 0; index < neighborsCoords.length; index++) {
+            if (neighborsCoords[index].equals(inputCoords)) {
+                return index;
+            }
+        }
+        return -1;
+    }
+    public Coords[] getAllNeighbors(){
+        return neighborsCoords;
+    }
+    /**
+     * Returns the neighbor coordinates of a given index value
+     * @param i index
+     * @return neighborsCoords of a given index
+     * @throws ArrayIndexOutOfBoundsException getNeighbor i is greater than 4 or less than 0
+     */
+    public Coords getNeighbor(int i){
+        if(i <= 0 && i >=3){
+            return neighborsCoords[i];
+        } 
+        else throw new ArrayIndexOutOfBoundsException("getNeighbor tried to find an invalid neighboring cell.");
+    }
     public CellStatus getStatus() {
         return status;
     }

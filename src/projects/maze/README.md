@@ -11,10 +11,10 @@ Once the grid model is tested and documented, you will use it to implement a mod
 ## Checklists
 
 ### 1.1 Debug, test, and document the starter code
-- [ ] Get the files from the class repo into your fork.
-    - [ ] from `src/projects/maze`
-    - [ ] `test/projects/maze`
-- [ ] Fix the bug making the current tests fail.
+- [X] Get the files from the class repo into your fork.
+    - [X] from `src/projects/maze`
+    - [X] `test/projects/maze`
+- [X] Fix the bug making the current tests fail.
 - [ ] Add more unit tests to ensure complete coverage.
 - [ ] Add javadocs to the important methods. Add comments in code if you like.
 
