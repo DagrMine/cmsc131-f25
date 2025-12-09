@@ -21,24 +21,56 @@ public class Maze {
 
     private final Grid grid;
 
+    // Constructors
+
     public Maze(int maxCells) {
         grid = new Grid(maxCells);
     }
-    public CellStatus getStart(){
-        grid.
+
+    // Private Methods
+
+    /**
+     * Searches for the first cell that has a given status within the maze.
+     * 
+     * @param findThisStatus
+     * @return Returns first Cell found with the requested status.
+     *         Returns null on a failure to find a cell with the status.
+     */
+    private Cell getFirstCellStatus(CellStatus findThisStatus) {
+        Cell[] cells = grid.getAllCells();
+        int max = grid.getArrayLength();
+        for (int i = 0; i < max; i++) {
+            if (cells[i].getStatus().equals(findThisStatus)) {
+                return cells[i];
+            }
+        }
+        return null;
     }
 
-    public void insertCell(Cell cell){
+    // Public Methods
+
+    public Cell getStart() {
+        return getFirstCellStatus(CellStatus.S);
+    }
+
+    public Cell getEnd() {
+        return getFirstCellStatus(CellStatus.E);
+    }
+
+    public void insertCell(Cell cell) {
         grid.insertCell(cell);
     }
-
-    public void discoverAndSetupNeighbors() {
-
+    //I had to check the class repo for this because I was under the impression from the name that it was supposed to
+    //discover neighbors for each cell in the maze and set them for the grid.
+    public Cell[] discoverAndSetupNeighbors(Cell cell) {
+        Cell[] cells = grid.getAllCells();
+        cells[]
     }
 
     /**
      * Writes the maze being called to a given filename.
      * Provided by Dusel. Assumes grid cell has a getStatus() method.
+     * 
      * @param filename - Output filename.
      */
     public void serialize(String filename) {
@@ -53,17 +85,20 @@ public class Maze {
             for (idxCell = 0; idxCell < cells.length; idxCell++) {
                 int row = cells[idxCell].getCoords().getRow();
                 int col = cells[idxCell].getCoords().getCol();
-                if (row > maxRow) { maxRow = row; }
-                if (col > maxCol) { maxCol = col; }
+                if (row > maxRow) {
+                    maxRow = row;
+                }
+                if (col > maxCol) {
+                    maxCol = col;
+                }
             }
-    
+
             // write cell statuses, using 'X' for absent (inaccessible) cells
             idxCell = 0;
             for (int row = 0; row <= maxRow; row++) {
                 for (int col = 0; col <= maxCol; col++) {
                     Cell maybeCell = grid.getCell(
-                        new Coords(row, col)
-                    );
+                            new Coords(row, col));
                     if (maybeCell != null) {
                         writer.write(maybeCell.getStatus().name());
                         idxCell++;
@@ -78,7 +113,7 @@ public class Maze {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
+
     }
 
 }

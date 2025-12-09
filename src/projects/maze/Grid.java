@@ -10,6 +10,11 @@ public class Grid {
         cellCount = 0;
     }
 
+    //TODO Determine implementation neccessity.
+    public boolean setNeighbor(Cell cell, Cell neighborCell){
+        return false;
+    }
+
     public boolean insertCell(Cell cell) {
         if (cellCount < cells.length) {
             cells[cellCount] = cell;
