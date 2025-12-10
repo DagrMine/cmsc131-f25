@@ -36,7 +36,7 @@ public class Maze {
      * @return Returns first Cell found with the requested status.
      *         Returns null on a failure to find a cell with the status.
      */
-    private Cell getFirstCellStatus(CellStatus findThisStatus) {
+    private Cell getFirstCellWithStatus(CellStatus findThisStatus) {
         Cell[] cells = grid.getAllCells();
         int max = grid.getArrayLength();
         for (int i = 0; i < max; i++) {
@@ -50,21 +50,75 @@ public class Maze {
     // Public Methods
 
     public Cell getStart() {
-        return getFirstCellStatus(CellStatus.S);
+        return getFirstCellWithStatus(CellStatus.S);
     }
 
     public Cell getEnd() {
-        return getFirstCellStatus(CellStatus.E);
+        return getFirstCellWithStatus(CellStatus.E);
     }
 
     public void insertCell(Cell cell) {
         grid.insertCell(cell);
     }
-    //I had to check the class repo for this because I was under the impression from the name that it was supposed to
-    //discover neighbors for each cell in the maze and set them for the grid.
-    public Cell[] discoverAndSetupNeighbors(Cell cell) {
-        Cell[] cells = grid.getAllCells();
-        cells[]
+
+    public int getMazeSize() {
+        return grid.getArrayLength();
+    }
+
+    // I had to check the class repo for this because I was under the impression
+    // from the name that it was supposed to
+    // discover neighbors for each cell in the maze and set them for the grid.
+    // Which I have now done anyways soo nevermind.
+    /**
+     * "Discovers" neighbors and adds them to the cell's data. Used for the
+     * setupNeighbors function.
+     * Exists because I break problems into pieces and for clean code.
+     * 
+     * @param cell cell to discover neighbors for
+     * @return input cell with the neighbors set
+     */
+    public void discoverAndSetupNeighbors() {
+        // Preinitialize variables
+        // Many of these are just for cleaner code for my sanity and for readability.
+        Cell cell;
+        Cell temp;
+        int baseRow;
+        int baseCol;
+
+        // It was easier than validating the same thing four times
+        Coords[] direction = new Coords[4];
+
+        for (int i = 0; i < grid.getArrayLength(); i++) {
+
+            // retrieve cell to setup
+            cell = grid.getCellAtIndex(i);
+
+            // update first cell location
+            baseRow = cell.getCoords().getRow();
+            baseCol = cell.getCoords().getCol();
+
+            // update possible neighbor cell locations
+            // North
+            direction[0] = new Coords(baseRow + 1, baseCol);
+            // East
+            direction[1] = new Coords(baseRow, baseCol + 1);
+            // South
+            direction[2] = new Coords(baseRow - 1, baseCol);
+            // West
+            direction[3] = new Coords(baseRow, baseCol - 1);
+
+            // check if the neighboring cell in question exists within the maze
+            for (int j = 0; j < 4; j++) {
+                temp = grid.getCell(direction[j]);
+                // Wanted to do null validation here instead of at the cell level because I
+                // don't need it everywhere.
+                if (temp != null) {
+                    if (temp.getStatus() != (null)) {
+                        cell.setNeighbor(direction[j], j);
+                    }
+                }
+            }
+        }
     }
 
     /**

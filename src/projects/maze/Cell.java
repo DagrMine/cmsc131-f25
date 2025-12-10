@@ -24,6 +24,7 @@ package projects.maze;
 public class Cell {
 
     private final Coords coords;
+    //TODO final
     private Coords[] neighborsCoords = new Coords[4];
     private boolean explored = false;
     private CellStatus status;
@@ -40,29 +41,41 @@ public class Cell {
         coords = c;
         status = s;
     }
+    /*
+    public Cell(Coords c, CellStatus s, Coords[] n){
+        coords = c;
+        status = s;
+        neighborsCoords = n;
+    }
+    */
 
     // Accessors
     public Coords getCoords() {
         return coords;
     }
-
+    public CellStatus getStatus() {
+        return status;
+    }
+    public boolean isExplored() {
+        return explored;
+    }
     /**
      * Get coordinates for a specific neighbor.
      * 
-     * @param r Row
-     * @param c Column
+     * @param cellCoordinates coordinates of the cell to be returned.
      * @return returns the array index value of a given neighbor coordinate
-     */ //TODO convert to just coords for the input or delete method entirely
-    public int getNeighborIndex(int r, int c) {
-        Coords inputCoords = new Coords(r, c);
+     */
+    public int getNeighborIndex(Coords cellCoordinates) {
         for (int index = 0; index < neighborsCoords.length; index++) {
-            if (neighborsCoords[index].equals(inputCoords)) {
+            if (neighborsCoords[index].equals(cellCoordinates)) {
                 return index;
             }
         }
         return -1;
     }
-
+    /**
+     * @return all neighbors of the cell as a Coords[] array. Does nothing if the neighbors have not been initialized.
+     */
     public Coords[] getAllNeighbors() {
         return neighborsCoords;
     }
@@ -80,14 +93,6 @@ public class Cell {
             return neighborsCoords[i];
         } else
             throw new ArrayIndexOutOfBoundsException("getNeighbor tried to find an invalid neighboring cell.");
-    }
-
-    public CellStatus getStatus() {
-        return status;
-    }
-
-    public boolean isExplored() {
-        return explored;
     }
 
     // Modifiers

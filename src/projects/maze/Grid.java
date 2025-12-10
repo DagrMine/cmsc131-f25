@@ -23,7 +23,10 @@ public class Grid {
         }
         return false;
     }
-
+    /**
+     * @param vh coordinates to be searched for
+     * @return Cell with the given coordinates
+     */
     public Cell getCell(Coords vh) {
         for (int idx = 0; idx < cellCount; idx++) {
             if ( cells[idx].getCoords().equals(vh) ) {
@@ -31,6 +34,10 @@ public class Grid {
             }
         }
         return null;
+    }
+    
+    public Cell getCellAtIndex(int i){
+        return cells[i];
     }
 
     public int getCellCount() {

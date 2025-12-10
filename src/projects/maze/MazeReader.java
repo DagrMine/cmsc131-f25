@@ -32,6 +32,7 @@ public class MazeReader {
                             new Cell(
                                 new Coords(row, col),
                                 CellStatus.valueOf(tokens[i])
+
                             )
                         );
                     }
@@ -40,6 +41,7 @@ public class MazeReader {
                 row++; // new row
             }
             scanner.close();
+            //Neighbors
             maze.discoverAndSetupNeighbors();
             return maze;
         } catch (FileNotFoundException e) {
