@@ -1,5 +1,7 @@
 package projects.maze;
 
+import java.util.Arrays;
+
 public class Grid {
 
     private final Cell[] cells;
@@ -10,11 +12,6 @@ public class Grid {
         cellCount = 0;
     }
 
-    //TODO Determine implementation neccessity.
-    public boolean setNeighbor(Cell cell, Cell neighborCell){
-        return false;
-    }
-
     public boolean insertCell(Cell cell) {
         if (cellCount < cells.length) {
             cells[cellCount] = cell;
@@ -23,27 +20,33 @@ public class Grid {
         }
         return false;
     }
+
     /**
      * @param vh coordinates to be searched for
      * @return Cell with the given coordinates
      */
     public Cell getCell(Coords vh) {
         for (int idx = 0; idx < cellCount; idx++) {
-            if ( cells[idx].getCoords().equals(vh) ) {
-               return cells[idx];
+            if (cells[idx].getCoords().equals(vh)) {
+                return cells[idx];
             }
         }
         return null;
     }
-    
-    public Cell getCellAtIndex(int i){
+
+    /**
+     * 
+     * @param i index
+     * @return Cell at the given index value from within the grid datastructure.
+     */
+    public Cell getCellAtIndex(int i) {
         return cells[i];
     }
 
     public int getCellCount() {
         return cellCount;
     }
-
+    
     public Cell[] getAllCells() {
         Cell[] allCells = new Cell[cellCount];
         for (int idx = 0; idx < cellCount; idx++) {
@@ -51,8 +54,8 @@ public class Grid {
         }
         return allCells;
     }
-
-    public int getArrayLength(){
+    
+    public int getArrayLength() {
         return cells.length;
     }
 

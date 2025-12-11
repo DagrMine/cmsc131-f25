@@ -1,13 +1,23 @@
 {
-    "java.project.referencedLibraries": [
-        "/opt/junit/junit-platform-console-standalone.jar"
-    ],
-    "java.project.sourcePaths": [
-        "src", 
-        "test"
-    ],
-    "editor.rulers": [
-        80
-    ],
-    "java.debug.settings.onBuildFailureProceed": true
+  "java.project.referencedLibraries": [
+    "/opt/junit/junit-platform-console-standalone.jar"
+  ],
+  "java.project.sourcePaths": [
+    "src",
+    "test"
+  ],
+  "editor.rulers": [
+    80
+  ],
+  "java.debug.settings.onBuildFailureProceed": true,
+  "files.exclude": {
+    //Bank
+    "**src/projects/bank": true,
+    "**data/bank": true,
+    "**test/projects/bank": true,
+    //Maze
+    "**src/projects/maze": false,
+    "**data/maze": false,
+    "**test/projects/maze": false,
+  }
 }

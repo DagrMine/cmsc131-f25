@@ -24,8 +24,7 @@ package projects.maze;
 public class Cell {
 
     private final Coords coords;
-    //TODO final
-    private Coords[] neighborsCoords = new Coords[4];
+    private final Coords[] neighborsCoords = new Coords[4];
     private boolean explored = false;
     private CellStatus status;
 
@@ -110,7 +109,7 @@ public class Cell {
      * @return false if the index value is OOB
      */
     public boolean setNeighbor(Coords neighborCoords, int index) {
-        if (index > 0 && index < 4) {
+        if (index >= 0 && index < 4) {
             this.neighborsCoords[index] = neighborCoords;
             return true;
         }

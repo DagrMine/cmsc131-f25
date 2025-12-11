@@ -10,12 +10,12 @@ import java.io.FileNotFoundException;
 import org.junit.jupiter.api.Test;
 
 public class MazeTest {
-
+    //Done
     @Test
     public void testConstructorAndAccessors() {
         Maze emptyMaze = new Maze(25);
         // Java wasn't recognizing this method for a minute there for some reason?
-        assertEquals(emptyMaze.getMazeSize(), 25);
+        assertEquals(emptyMaze.grid.getArrayLength(), 25);
         // assertNull(emptyMaze.getEnd());
         Maze maze = MazeReader.load("data/maze/sample_maze.txt");
         // Start/end
@@ -25,26 +25,46 @@ public class MazeTest {
         assertTrue(maze.getEnd().getCoords().equals(endCoords));
         // InsertCell
         Cell cell = new Cell(new Coords(0, 0), CellStatus.S);
-        emptyMaze.insertCell(cell);
-        emptyMaze.insertCell(cell);
+        emptyMaze.grid.insertCell(cell);
+        emptyMaze.grid.insertCell(cell);
         assertTrue(emptyMaze.getStart().getCoords() == cell.getCoords());
         // Maze Size
-        assertEquals(emptyMaze.getMazeSize(), 25);
+        assertEquals(emptyMaze.grid.getArrayLength(), 25);
         // Start/End Advanced
         Cell cell1 = new Cell(new Coords(0, 2), CellStatus.O);
         Cell cell2 = new Cell(new Coords(0, 3), CellStatus.E);
         Cell cell3 = new Cell(new Coords(4, 3), CellStatus.E);
-        emptyMaze.insertCell(cell1);
-        emptyMaze.insertCell(cell2);
-        emptyMaze.insertCell(cell3);
+        emptyMaze.grid.insertCell(cell1);
+        emptyMaze.grid.insertCell(cell2);
+        emptyMaze.grid.insertCell(cell3);
         assertTrue(emptyMaze.getEnd().equals(cell2));
     }
 
     @Test
     public void testNeighborSetup() {
-        Maze maze = MazeReader.load("data/maze/sample_maze.txt");
-        maze.discoverAndSetupNeighbors();
-        // TODO more tests with phase 2
+        Maze maze = MazeReader.load("data/maze/Test/neighbors_test_maze.txt");
+        Coords[] neighbors = maze.getNeighbors(new Coords(2,1));
+        int[] test = new int[2];
+        test[0] = maze.getStart().getCoords().getCol();
+        test[1] = maze.getStart().getCoords().getRow();
+        //System.out.println(test[0]+","+test[1]);
+        assertTrue(maze.getStart().getCoords().equals(new Coords(2,0)));
+        Coords test2 = maze.grid.getCell(new Coords(1, 1)).getCoords();
+        //System.out.println(test2.getCol()+","+test2.getRow());
+        //North
+        assertTrue(neighbors[0].equals(new Coords(1,1)));
+        //East
+        assertTrue(neighbors[1].equals(new Coords(2, 2)));
+        //South
+        assertTrue(neighbors[2].equals(new Coords(3, 1)));
+        //West
+        assertTrue(neighbors[3].equals(new Coords(2, 0)));
+
+        Coords[] neighbors2 = maze.getNeighbors(new Coords(2,3));
+        assertTrue(neighbors2[0] == null);
+        assertTrue(neighbors2[1].equals(new Coords(2,4)));
+        assertTrue(neighbors2[2] == null);
+        assertTrue(neighbors2[3].equals(new Coords(2,2)));
     }
 
     @Test
@@ -73,10 +93,13 @@ public class MazeTest {
             assertTrue(lines[4].equals("X O O O X O X X "));
             assertTrue(lines[5].equals("X O X O X O O E "));
 
+            scanner.close();
         } catch (FileNotFoundException e1) {
-            fail();
+            fail("FileNotFoundException thrown. The relative path for the file is probably wrong.");
         } catch (NullPointerException e2) {
-            fail();
+            fail("NullPointerException. Self explanatory.");
+        } catch (IOException e3) {
+            fail("How did you throw this?");
         }
 
     }

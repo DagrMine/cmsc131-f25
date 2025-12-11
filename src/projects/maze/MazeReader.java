@@ -28,7 +28,7 @@ public class MazeReader {
                 String[] tokens = scanner.nextLine().split(",");
                 for (int i = 0; i < tokens.length; i++) {
                     if (!tokens[i].equals("X")) {
-                        maze.insertCell(
+                        maze.grid.insertCell(
                             new Cell(
                                 new Coords(row, col),
                                 CellStatus.valueOf(tokens[i])

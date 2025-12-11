@@ -17,9 +17,12 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class Maze {
+import org.junit.experimental.categories.Category;
 
-    private final Grid grid;
+public class Maze {
+    // I'm kind of losing my mind not being able to access grid from the maze so
+    // it's public now
+    public final Grid grid;
 
     // Constructors
 
@@ -48,6 +51,7 @@ public class Maze {
     }
 
     // Public Methods
+    // Accessors / Return Methods
 
     public Cell getStart() {
         return getFirstCellWithStatus(CellStatus.S);
@@ -57,12 +61,23 @@ public class Maze {
         return getFirstCellWithStatus(CellStatus.E);
     }
 
+    @Deprecated
     public void insertCell(Cell cell) {
         grid.insertCell(cell);
     }
 
+    @Deprecated
     public int getMazeSize() {
         return grid.getArrayLength();
+    }
+
+    public Coords[] getNeighbors(Coords cellCoords) {
+        return grid.getCell(cellCoords).getAllNeighbors();
+    }
+
+    @Deprecated
+    public Cell getCell(Coords coords) {
+        return grid.getCell(coords);
     }
 
     // I had to check the class repo for this because I was under the impression
@@ -70,23 +85,17 @@ public class Maze {
     // discover neighbors for each cell in the maze and set them for the grid.
     // Which I have now done anyways soo nevermind.
     /**
-     * "Discovers" neighbors and adds them to the cell's data. Used for the
-     * setupNeighbors function.
+     * "Discovers" neighbors and adds them to the cell's data.
      * Exists because I break problems into pieces and for clean code.
-     * 
-     * @param cell cell to discover neighbors for
-     * @return input cell with the neighbors set
      */
     public void discoverAndSetupNeighbors() {
         // Preinitialize variables
         // Many of these are just for cleaner code for my sanity and for readability.
         Cell cell;
         Cell temp;
-        int baseRow;
-        int baseCol;
 
         // It was easier than validating the same thing four times
-        Coords[] direction = new Coords[4];
+        final Coords[] direction = new Coords[4];
 
         for (int i = 0; i < grid.getArrayLength(); i++) {
 
@@ -94,16 +103,16 @@ public class Maze {
             cell = grid.getCellAtIndex(i);
 
             // update first cell location
-            baseRow = cell.getCoords().getRow();
-            baseCol = cell.getCoords().getCol();
+            final int baseRow = cell.getCoords().getRow();
+            final int baseCol = cell.getCoords().getCol();
 
             // update possible neighbor cell locations
             // North
-            direction[0] = new Coords(baseRow + 1, baseCol);
+            direction[0] = new Coords(baseRow - 1, baseCol);
             // East
             direction[1] = new Coords(baseRow, baseCol + 1);
             // South
-            direction[2] = new Coords(baseRow - 1, baseCol);
+            direction[2] = new Coords(baseRow + 1, baseCol);
             // West
             direction[3] = new Coords(baseRow, baseCol - 1);
 
