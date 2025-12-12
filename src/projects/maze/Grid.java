@@ -1,7 +1,5 @@
 package projects.maze;
 
-import java.util.Arrays;
-
 public class Grid {
 
     private final Cell[] cells;

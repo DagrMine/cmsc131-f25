@@ -1,11 +1,6 @@
 package projects.maze;
 
 import static org.junit.Assert.*;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
-
 import org.junit.Test;
 
 public class MazeReaderTest {

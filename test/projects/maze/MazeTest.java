@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Scanner;
 import java.io.File;
-import java.io.IOException;
 import java.io.FileNotFoundException;
 
 import org.junit.jupiter.api.Test;
@@ -49,7 +48,7 @@ public class MazeTest {
         test[1] = maze.getStart().getCoords().getRow();
         // System.out.println(test[0]+","+test[1]);
         assertTrue(maze.getStart().getCoords().equals(new Coords(2, 0)));
-        Coords test2 = maze.grid.getCell(new Coords(1, 1)).getCoords();
+        //Coords test2 = maze.grid.getCell(new Coords(1, 1)).getCoords();
         // System.out.println(test2.getCol()+","+test2.getRow());
         // North
         assertTrue(neighbors[0].equals(new Coords(1, 1)));
@@ -92,23 +91,51 @@ public class MazeTest {
             assertTrue(lines[3].equals("X X X O O O X X "));
             assertTrue(lines[4].equals("X O O O X O X X "));
             assertTrue(lines[5].equals("X O X O X O O E "));
+            // interesting quirk of the mazereader is that it just ignores the last line if
+            // it's all X's
 
             scanner.close();
         } catch (FileNotFoundException e1) {
             fail("FileNotFoundException thrown. The relative path for the file is probably wrong.");
         } catch (NullPointerException e2) {
             fail("NullPointerException. Self explanatory.");
-        } catch (IOException e3) {
+            
+        } catch (Exception e3) {
             fail("How did you throw this?");
         }
     }
 
     @Test
     public void testSolver() {
+        Maze maze1 = new Maze(25);
+        assertThrows(NullPointerException.class, () -> {
+            maze1.solveMaze();
+        });
         File testfile = new File("data/maze/Test/solver_test.txt");
         testfile.delete();
         Maze maze = MazeReader.load("data/maze/sample_maze.txt");
         maze.solveMaze();
         maze.serialize("data/maze/Test/solver_test.txt");
+        // Copied from the serialization test
+        try {
+            Scanner scanner = new Scanner(new File("data/maze/Test/solver_test.txt"));
+            int index = 0;
+            String[] lines = new String[6];
+            while (scanner.hasNextLine()) {
+                lines[index] = scanner.nextLine();
+                index++;
+            }
+
+            assertTrue(lines[0].equals("X X X X X X X X "));
+            assertTrue(lines[1].equals("S P P P O O O X "));
+            assertTrue(lines[2].equals("X O X P X X O X "));
+            assertTrue(lines[3].equals("X X X P P P X X "));
+            assertTrue(lines[4].equals("X O O O X P X X "));
+            assertTrue(lines[5].equals("X O X O X P P E "));
+
+            scanner.close();
+        } catch (FileNotFoundException e1) {
+            fail("FileNotFoundException thrown. The relative path for the file is probably wrong.");
+        }
     }
 }

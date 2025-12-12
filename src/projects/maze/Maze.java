@@ -36,9 +36,13 @@ public class Maze {
      * @param findThisStatus
      * @return Returns first Cell found with the requested status.
      *         Returns null on a failure to find a cell with the status.
+     * @throws NullPointerException if the maze has not been initialized or is empty.
      */
     private Cell getFirstCellWithStatus(CellStatus findThisStatus) {
         Cell[] cells = grid.getAllCells();
+        if (cells.length == 0){
+            throw new NullPointerException("Maze has not been initialized and is empty.");
+        }
         int max = grid.getArrayLength();
         for (int i = 0; i < max; i++) {
             if (cells[i].getStatus().equals(findThisStatus)) {
