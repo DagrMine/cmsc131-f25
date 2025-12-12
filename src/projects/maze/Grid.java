@@ -46,7 +46,7 @@ public class Grid {
     public int getCellCount() {
         return cellCount;
     }
-    
+
     public Cell[] getAllCells() {
         Cell[] allCells = new Cell[cellCount];
         for (int idx = 0; idx < cellCount; idx++) {
@@ -54,7 +54,7 @@ public class Grid {
         }
         return allCells;
     }
-    
+
     public int getArrayLength() {
         return cells.length;
     }

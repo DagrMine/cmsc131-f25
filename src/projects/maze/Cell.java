@@ -55,7 +55,7 @@ public class Cell {
     public CellStatus getStatus() {
         return status;
     }
-    public boolean isExplored() {
+    public boolean getExplored() {
         return explored;
     }
     /**
@@ -88,7 +88,7 @@ public class Cell {
      *                                        less than 0
      */
     public Coords getNeighbor(int i) {
-        if (i <= 0 && i >= 3) {
+        if (i >= 0 && i < 4) {
             return neighborsCoords[i];
         } else
             throw new ArrayIndexOutOfBoundsException("getNeighbor tried to find an invalid neighboring cell.");

@@ -17,8 +17,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import org.junit.experimental.categories.Category;
-
 public class Maze {
     // I'm kind of losing my mind not being able to access grid from the maze so
     // it's public now
@@ -130,6 +128,63 @@ public class Maze {
         }
     }
 
+    /*
+     * calls the solve function with the prerequisite data it needs to begin.
+     * Specifically the data it doesn't need to recall or use every time it
+     * iterates.
+     * This includes:
+     * The starting cell.
+     */
+    /**
+     * Solves the maze. Requires the maze to have already been initialized
+     * previously.
+     * 
+     * @return True if the maze is solved. False if the maze cannot be solved.
+     */
+    public boolean solveMaze() {
+        Cell startCell = getStart();
+        return solve(startCell);
+    }
+
+    private boolean solve(Cell cell) {
+        switch (cell.getStatus()) {
+            case CellStatus.O, CellStatus.P, CellStatus.S:
+                // Obtain neighbor cell coords, obtain neighbor cell, obtain neighbor cell
+                // status.
+                // Check if neighbor is walkable.
+                // Iterate through each possible neighbor.
+                for (int i = 0; i < 4; i++) {
+                    // Neighbor index in the cell class is ordered north east south west
+                    Coords neighborCoords = cell.getNeighbor(i);
+                    if (neighborCoords == null) {
+                        continue;
+                    }
+                    Cell neighborCell = grid.getCell(neighborCoords);
+                    if (neighborCell != null && neighborCell.getExplored() != true) {
+                        // Sets the current cell as part of the path and explored
+                        // this if() irritates me.
+                        if (cell.getStatus().equals(CellStatus.O)) {
+                            cell.setStatus(CellStatus.P);
+                        }
+                        cell.setExplored(true);
+                        // Onto the next cell. Returns true through the callstack if exit is found.
+                        if (solve(neighborCell) == true) {
+                            return true;
+                        }
+                    }
+                }
+                // Return false if no neighbors
+                cell.setStatus(CellStatus.O);
+                return false;
+            case CellStatus.E:
+                // Return true if exit is found, cascades to the top.
+                cell.setExplored(true);
+                return true;
+            default:
+                throw new NullPointerException("Someone put a wrong letter in the maze probably.");
+        }
+    }
+
     /**
      * Writes the maze being called to a given filename.
      * Provided by Dusel. Assumes grid cell has a getStatus() method.
@@ -176,7 +231,5 @@ public class Maze {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
-
 }

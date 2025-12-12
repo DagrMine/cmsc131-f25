@@ -10,7 +10,7 @@ import java.io.FileNotFoundException;
 import org.junit.jupiter.api.Test;
 
 public class MazeTest {
-    //Done
+    // Done
     @Test
     public void testConstructorAndAccessors() {
         Maze emptyMaze = new Maze(25);
@@ -43,28 +43,28 @@ public class MazeTest {
     @Test
     public void testNeighborSetup() {
         Maze maze = MazeReader.load("data/maze/Test/neighbors_test_maze.txt");
-        Coords[] neighbors = maze.getNeighbors(new Coords(2,1));
+        Coords[] neighbors = maze.getNeighbors(new Coords(2, 1));
         int[] test = new int[2];
         test[0] = maze.getStart().getCoords().getCol();
         test[1] = maze.getStart().getCoords().getRow();
-        //System.out.println(test[0]+","+test[1]);
-        assertTrue(maze.getStart().getCoords().equals(new Coords(2,0)));
+        // System.out.println(test[0]+","+test[1]);
+        assertTrue(maze.getStart().getCoords().equals(new Coords(2, 0)));
         Coords test2 = maze.grid.getCell(new Coords(1, 1)).getCoords();
-        //System.out.println(test2.getCol()+","+test2.getRow());
-        //North
-        assertTrue(neighbors[0].equals(new Coords(1,1)));
-        //East
+        // System.out.println(test2.getCol()+","+test2.getRow());
+        // North
+        assertTrue(neighbors[0].equals(new Coords(1, 1)));
+        // East
         assertTrue(neighbors[1].equals(new Coords(2, 2)));
-        //South
+        // South
         assertTrue(neighbors[2].equals(new Coords(3, 1)));
-        //West
+        // West
         assertTrue(neighbors[3].equals(new Coords(2, 0)));
 
-        Coords[] neighbors2 = maze.getNeighbors(new Coords(2,3));
+        Coords[] neighbors2 = maze.getNeighbors(new Coords(2, 3));
         assertTrue(neighbors2[0] == null);
-        assertTrue(neighbors2[1].equals(new Coords(2,4)));
+        assertTrue(neighbors2[1].equals(new Coords(2, 4)));
         assertTrue(neighbors2[2] == null);
-        assertTrue(neighbors2[3].equals(new Coords(2,2)));
+        assertTrue(neighbors2[3].equals(new Coords(2, 2)));
     }
 
     @Test
@@ -101,6 +101,14 @@ public class MazeTest {
         } catch (IOException e3) {
             fail("How did you throw this?");
         }
+    }
 
+    @Test
+    public void testSolver() {
+        File testfile = new File("data/maze/Test/solver_test.txt");
+        testfile.delete();
+        Maze maze = MazeReader.load("data/maze/sample_maze.txt");
+        maze.solveMaze();
+        maze.serialize("data/maze/Test/solver_test.txt");
     }
 }
