@@ -185,7 +185,7 @@ public class Maze {
                 cell.setExplored(true);
                 return true;
             default:
-                throw new NullPointerException("Someone put a wrong letter in the maze probably.");
+                throw new NullPointerException("Someone put a wrong letter in the maze probably." + "...IDK dude");
         }
     }
 
